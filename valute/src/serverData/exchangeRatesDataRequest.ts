@@ -1,4 +1,4 @@
-export async function getTodayValuteData() {
+export async function getTodayExchangeRatesData() {
   const valuteResponse: Response = await fetch(
     "https://www.cbr-xml-daily.ru/daily_json.js"
   );

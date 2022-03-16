@@ -1,11 +1,11 @@
 import React from "react";
 
-import { getTodayValuteData } from "./serverData/getValuteDataRequests";
+import { getTodayExchangeRatesData } from "./serverData/exchangeRatesDataRequest";
 
 import ExhangeRatesList from "./components/exchangeRatesList/exchangeRatesList";
 
 function App() {
-  getTodayValuteData();
+  getTodayExchangeRatesData();
   return (
     <div>
       <ExhangeRatesList />
