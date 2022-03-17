@@ -1,4 +1,4 @@
-export interface IExchangeRatesRequest {
+export interface IExchangeRatesRequestData {
   Date: string;
   PreviousDate: string;
   PreviousURL: string;
