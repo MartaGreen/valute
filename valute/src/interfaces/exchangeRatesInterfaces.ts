@@ -19,3 +19,7 @@ export interface IExchangeRateData {
   Value: number;
   Previous: number;
 }
+
+export interface IPercentOfChangeObj {
+  [exchangeRateCode: string]: number;
+}

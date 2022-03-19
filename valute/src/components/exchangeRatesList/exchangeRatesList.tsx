@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import styles from "./exchangeRatesList.style";
 
-import { getTodayExchangeRatesData } from "../../serverData/exchangeRatesDataRequest";
+import {
+  getExchangeRatesData,
+  getPercentOfChange,
+} from "../../serverData/exchangeRatesDataRequest";
+import { TODAY_REQUEST_URL } from "../../constants/requestsConstants";
 import {
   IExchangeRate,
   IExchangeRatesRequestData,
   IExchangeRateData,
+  IPercentOfChangeObj,
 } from "../../interfaces/exchangeRatesInterfaces";
 
 import ExhangeRateElement from "../exchangeRateElement/exchangeRateElement";
@@ -16,12 +21,14 @@ export default function ExhangeRatesList() {
   const [exchangeRatesData, setExhangeRatesData] = useState(
     [] as IExchangeRateData[]
   );
-  const [previousReqURL, setPreviousReqURL] = useState("");
+  const [percentOfChange, setPercentOfChange] = useState(
+    {} as IPercentOfChangeObj
+  );
 
   useEffect(() => {
     const getReqData = async () => {
       const exchangeRatesReqData: IExchangeRatesRequestData | null =
-        await getTodayExchangeRatesData();
+        await getExchangeRatesData(TODAY_REQUEST_URL);
 
       if (exchangeRatesReqData) {
         const exchangeRatesDataArray: IExchangeRateData[] = ObjectToArray(
@@ -29,7 +36,12 @@ export default function ExhangeRatesList() {
         );
         setExhangeRatesData(exchangeRatesDataArray);
 
-        setPreviousReqURL(exchangeRatesReqData.PreviousURL);
+        const previousExchangeRatesURL = exchangeRatesReqData.PreviousURL;
+        const percentOfChangeObj = await getPercentOfChange(
+          previousExchangeRatesURL,
+          exchangeRatesDataArray
+        );
+        setPercentOfChange(percentOfChangeObj);
       }
     };
 
@@ -58,6 +70,7 @@ export default function ExhangeRatesList() {
                   exchangeRateData={exchangeRateItem}
                   key={`exchRate_${index + 1}`}
                   itemCounter={index}
+                  percentOfChangeData={percentOfChange}
                 />
               );
             }

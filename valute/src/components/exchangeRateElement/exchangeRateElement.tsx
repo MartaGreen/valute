@@ -1,14 +1,18 @@
 import React from "react";
-import ReactTooltip from "react-tooltip";
 import styles from "./exchangeRateElement.style";
-import { IExchangeRateData } from "../../interfaces/exchangeRatesInterfaces";
+import {
+  IExchangeRateData,
+  IPercentOfChangeObj,
+} from "../../interfaces/exchangeRatesInterfaces";
 
 export default function ExhangeRateElement({
   exchangeRateData,
   itemCounter,
+  percentOfChangeData,
 }: {
   exchangeRateData: IExchangeRateData;
   itemCounter: number;
+  percentOfChangeData: IPercentOfChangeObj;
 }) {
   const classes = styles();
 
@@ -25,7 +29,9 @@ export default function ExhangeRateElement({
       <th className={classes.exchangeRateElement__column}>
         {exchangeRateData.Value}
       </th>
-      <th className={classes.exchangeRateElement__column}></th>
+      <th className={classes.exchangeRateElement__column}>
+        {percentOfChangeData[exchangeRateData.CharCode]}
+      </th>
     </tr>
   );
 }
