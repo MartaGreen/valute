@@ -5,14 +5,16 @@ import {
   IPercentOfChangeObj,
 } from "../../interfaces/exchangeRatesInterfaces";
 
+import PercentOfChangeIcon from "./percentOfChangeIcon/percentOfChangeIcon";
+
 export default function ExhangeRateElement({
   exchangeRateData,
   itemCounter,
-  percentOfChangeData,
+  percentOfChange,
 }: {
   exchangeRateData: IExchangeRateData;
   itemCounter: number;
-  percentOfChangeData: IPercentOfChangeObj;
+  percentOfChange: number;
 }) {
   const classes = styles();
 
@@ -29,8 +31,11 @@ export default function ExhangeRateElement({
       <th className={classes.exchangeRateElement__column}>
         {exchangeRateData.Value}
       </th>
-      <th className={classes.exchangeRateElement__column}>
-        {percentOfChangeData[exchangeRateData.CharCode]}
+      <th
+        className={`${classes.exchangeRateElement__column} ${classes.exchangeRateElement__percOfChange}`}
+      >
+        <PercentOfChangeIcon isIncrease={percentOfChange > 0} />
+        {percentOfChange}
       </th>
     </tr>
   );

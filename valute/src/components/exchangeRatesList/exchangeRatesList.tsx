@@ -70,7 +70,7 @@ export default function ExhangeRatesList() {
                   exchangeRateData={exchangeRateItem}
                   key={`exchRate_${index + 1}`}
                   itemCounter={index}
-                  percentOfChangeData={percentOfChange}
+                  percentOfChange={percentOfChange[exchangeRateItem.CharCode]}
                 />
               );
             }

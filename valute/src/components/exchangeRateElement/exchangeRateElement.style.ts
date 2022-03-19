@@ -14,7 +14,14 @@ const styles = createUseStyles({
   },
 
   exchangeRateElement__column: {
+    position: "relative",
+
     padding: 20,
+  },
+  exchangeRateElement__percOfChange: {
+    // display: "flex",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
 
   "@media (max-width: 400px)": {
