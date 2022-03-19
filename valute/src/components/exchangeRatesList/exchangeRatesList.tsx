@@ -40,7 +40,7 @@ export default function ExhangeRatesList() {
 
   return (
     <table className={classes.exchangeRateList}>
-      <thead>
+      <thead className={classes.exchangeRateList__header}>
         <tr>
           <th className={classes.exchangeRateList__item}>Код валюты</th>
           <th className={classes.exchangeRateList__item}>Курс (руб)</th>
@@ -57,6 +57,7 @@ export default function ExhangeRatesList() {
                 <ExhangeRateElement
                   exchangeRateData={exchangeRateItem}
                   key={`exchRate_${index + 1}`}
+                  itemCounter={index}
                 />
               );
             }
