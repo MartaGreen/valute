@@ -8,6 +8,8 @@ import {
   IExchangeRateData,
 } from "../../interfaces/exchangeRatesInterfaces";
 
+import ExhangeRateElement from "../exchangeRateElement/exchangeRateElement";
+
 export default function ExhangeRatesList() {
   const classes = styles();
 
@@ -17,22 +19,21 @@ export default function ExhangeRatesList() {
   const [previousReqURL, setPreviousReqURL] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getReqData = async () => {
       const exchangeRatesReqData: IExchangeRatesRequestData | null =
         await getTodayExchangeRatesData();
-      console.log(exchangeRatesReqData);
 
       if (exchangeRatesReqData) {
-        const exchangeRatesDataArr: IExchangeRateData[] = ObjectToArray(
+        const exchangeRatesDataArray: IExchangeRateData[] = ObjectToArray(
           exchangeRatesReqData.Valute
         );
-        setExhangeRatesData(exchangeRatesDataArr);
+        setExhangeRatesData(exchangeRatesDataArray);
 
         setPreviousReqURL(exchangeRatesReqData.PreviousURL);
       }
     };
 
-    fetchData().catch((err) =>
+    getReqData().catch((err) =>
       console.log("error occurred while getting data in useEffect", err)
     );
   }, []);
@@ -49,13 +50,22 @@ export default function ExhangeRatesList() {
         </tr>
       </thead>
       <tbody>
-        {exchangeRatesData.map((exchangeRateItem) => {
-          return (
-            <tr>
-              <td>text</td>
-            </tr>
-          );
-        })}
+        {exchangeRatesData.length ? (
+          exchangeRatesData.map(
+            (exchangeRateItem: IExchangeRateData, index: number) => {
+              return (
+                <ExhangeRateElement
+                  exchangeRateData={exchangeRateItem}
+                  key={`exchRate_${index + 1}`}
+                />
+              );
+            }
+          )
+        ) : (
+          <tr className={classes.loadingList}>
+            <td colSpan={3}>Loading ...</td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

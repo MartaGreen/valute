@@ -12,6 +12,11 @@ const styles = createUseStyles({
   exchangeRateList__item: {
     padding: 15,
   },
+
+  loadingList: {
+    textAlign: "center",
+    verticalAlign: "center",
+  },
 });
 
 export default styles;
