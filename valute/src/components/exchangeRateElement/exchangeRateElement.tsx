@@ -4,19 +4,25 @@ import {
   IExchangeRateData,
   IPercentOfChangeObj,
 } from "../../interfaces/exchangeRatesInterfaces";
+import { calculatePercentOfChange } from "../../serverData/exchangeRatesDataRequest";
 
 import PercentOfChangeIcon from "./percentOfChangeIcon/percentOfChangeIcon";
 
 export default function ExhangeRateElement({
   exchangeRateData,
   itemCounter,
-  percentOfChange,
+  previousReqURL,
 }: {
   exchangeRateData: IExchangeRateData;
   itemCounter: number;
-  percentOfChange: number;
+  previousReqURL: string;
 }) {
   const classes = styles();
+
+  const percentOfChange: number = calculatePercentOfChange(
+    exchangeRateData.Value,
+    exchangeRateData.Previous
+  );
 
   return (
     <tr

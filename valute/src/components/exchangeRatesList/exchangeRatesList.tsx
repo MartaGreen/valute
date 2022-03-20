@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./exchangeRatesList.style";
 
-import {
-  getExchangeRatesData,
-  getPercentOfChange,
-} from "../../serverData/exchangeRatesDataRequest";
+import { getExchangeRatesData } from "../../serverData/exchangeRatesDataRequest";
 import { TODAY_REQUEST_URL } from "../../constants/requestsConstants";
 import {
   IExchangeRate,
@@ -21,9 +18,7 @@ export default function ExhangeRatesList() {
   const [exchangeRatesData, setExhangeRatesData] = useState(
     [] as IExchangeRateData[]
   );
-  const [percentOfChange, setPercentOfChange] = useState(
-    {} as IPercentOfChangeObj
-  );
+  const [previousReqURL, setPreviousReqURL] = useState("");
 
   useEffect(() => {
     const getReqData = async () => {
@@ -37,11 +32,12 @@ export default function ExhangeRatesList() {
         setExhangeRatesData(exchangeRatesDataArray);
 
         const previousExchangeRatesURL = exchangeRatesReqData.PreviousURL;
-        const percentOfChangeObj = await getPercentOfChange(
-          previousExchangeRatesURL,
-          exchangeRatesDataArray
-        );
-        setPercentOfChange(percentOfChangeObj);
+        setPreviousReqURL(previousExchangeRatesURL);
+        // const percentOfChangeObj = await getPercentOfChange(
+        //   previousExchangeRatesURL,
+        //   exchangeRatesDataArray
+        // );
+        // setPercentOfChange(percentOfChangeObj);
       }
     };
 
@@ -70,7 +66,7 @@ export default function ExhangeRatesList() {
                   exchangeRateData={exchangeRateItem}
                   key={`exchRate_${index + 1}`}
                   itemCounter={index}
-                  percentOfChange={percentOfChange[exchangeRateItem.CharCode]}
+                  previousReqURL={previousReqURL}
                 />
               );
             }

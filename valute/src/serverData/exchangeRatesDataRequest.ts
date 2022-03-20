@@ -19,34 +19,37 @@ export async function getExchangeRatesData(requestURL: string) {
   }
 }
 
-export async function getPercentOfChange(
-  previousRequestURL: string,
-  todayExchangeRatesArray: IExchangeRateData[]
+// export async function getPercentOfChange(
+//   previousRequestURL: string,
+//   todayExchangeRatesArray: IExchangeRateData[]
+// ) {
+//   const previosExchangeRatesResponse: IExchangeRatesRequestData | null =
+//     await getExchangeRatesData(previousRequestURL);
+//   const previousExchangesRateData: IExchangeRate | undefined =
+//     previosExchangeRatesResponse?.Valute;
+
+//   const percentOfChangeObj: IPercentOfChangeObj = {};
+
+//   if (previousExchangesRateData) {
+//     todayExchangeRatesArray.forEach((exchangeRate) => {
+//       const previousExchangeRate: number =
+//         previousExchangesRateData[exchangeRate.CharCode].Value;
+//       const changePercent = calculatePercentOfChange(
+//         exchangeRate.Value,
+//         previousExchangeRate
+//       );
+
+//       percentOfChangeObj[exchangeRate.CharCode] = changePercent;
+//     });
+//   }
+
+//   return percentOfChangeObj;
+// }
+
+export function calculatePercentOfChange(
+  newValue: number,
+  previousValue: number
 ) {
-  const previosExchangeRatesResponse: IExchangeRatesRequestData | null =
-    await getExchangeRatesData(previousRequestURL);
-  const previousExchangesRateData: IExchangeRate | undefined =
-    previosExchangeRatesResponse?.Valute;
-
-  const percentOfChangeObj: IPercentOfChangeObj = {};
-
-  if (previousExchangesRateData) {
-    todayExchangeRatesArray.forEach((exchangeRate) => {
-      const previousExchangeRate: number =
-        previousExchangesRateData[exchangeRate.CharCode].Value;
-      const changePercent = calculatePercentOfChange(
-        exchangeRate.Value,
-        previousExchangeRate
-      );
-
-      percentOfChangeObj[exchangeRate.CharCode] = changePercent;
-    });
-  }
-
-  return percentOfChangeObj;
-}
-
-function calculatePercentOfChange(newValue: number, previousValue: number) {
   const percent: number = ((newValue - previousValue) / previousValue) * 100;
   const fixedPercent: number = Number(percent.toFixed(2));
   return fixedPercent;
