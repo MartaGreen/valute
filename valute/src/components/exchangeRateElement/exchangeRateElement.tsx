@@ -1,12 +1,14 @@
 import React from "react";
 import styles from "./exchangeRateElement.style";
+import { IExchangeRateData } from "../../interfaces/exchangeRatesInterfaces";
 import {
-  IExchangeRateData,
-  IPercentOfChangeObj,
-} from "../../interfaces/exchangeRatesInterfaces";
-import { calculatePercentOfChange } from "../../serverData/exchangeRatesDataRequest";
+  calculatePercentOfChange,
+  getCountOfPreviousRates,
+} from "../../serverData/exchangeRatesDataRequest";
+import { COUNT_OF_PREVIOUS_RATES } from "../../constants/requestsConstants";
 
 import PercentOfChangeIcon from "./percentOfChangeIcon/percentOfChangeIcon";
+import { useEffect } from "react";
 
 export default function ExhangeRateElement({
   exchangeRateData,
@@ -24,12 +26,26 @@ export default function ExhangeRateElement({
     exchangeRateData.Previous
   );
 
+  const getPreviousRates = async () => {
+    const countOfPreviousRates: IExchangeRateData[] =
+      await getCountOfPreviousRates(
+        COUNT_OF_PREVIOUS_RATES,
+        0,
+        previousReqURL,
+        [],
+        exchangeRateData.CharCode
+      );
+
+    console.log(countOfPreviousRates);
+  };
+
   return (
     <tr
       title={exchangeRateData.Name}
       className={`${classes.exchangeRateElement} ${
         itemCounter % 2 !== 0 ? classes.grayBg : ""
       }`}
+      onClick={async () => getPreviousRates()}
     >
       <th
         className={classes.exchangeRateElement__column}

@@ -1,8 +1,6 @@
 import {
-  IExchangeRatesRequestData,
   IExchangeRateData,
-  IExchangeRate,
-  IPercentOfChangeObj,
+  IExchangeRatesRequestData,
 } from "../interfaces/exchangeRatesInterfaces";
 
 export async function getExchangeRatesData(requestURL: string) {
@@ -11,7 +9,6 @@ export async function getExchangeRatesData(requestURL: string) {
     const exchangeRatesReqData: IExchangeRatesRequestData =
       await exchangeRatesResponse.json();
 
-    console.log(typeof exchangeRatesReqData);
     return exchangeRatesReqData;
   } catch (err) {
     console.log("error occurred while getting data from server", err);
@@ -53,4 +50,36 @@ export function calculatePercentOfChange(
   const percent: number = ((newValue - previousValue) / previousValue) * 100;
   const fixedPercent: number = Number(percent.toFixed(2));
   return fixedPercent;
+}
+
+/*
+  count: the number of previous ratings
+  i: integer of recursive function
+  reqUrl: previous exchange rates request
+  saveArr: storage of all received data
+  charCode: exchange rate code
+*/
+export async function getCountOfPreviousRates(
+  count: number,
+  i: number,
+  reqUrl: string,
+  saveArr: IExchangeRateData[],
+  charCode: string
+) {
+  if (i < count) {
+    i += 1;
+    const exchangeRatesData: IExchangeRatesRequestData | null =
+      await getExchangeRatesData(reqUrl);
+
+    if (exchangeRatesData) {
+      reqUrl = exchangeRatesData.PreviousURL;
+      const exchangeRateData: IExchangeRateData =
+        exchangeRatesData.Valute[charCode];
+      saveArr.push(exchangeRateData);
+
+      getCountOfPreviousRates(count, i, reqUrl, saveArr, charCode);
+    }
+  }
+
+  return saveArr;
 }
