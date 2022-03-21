@@ -7,7 +7,6 @@ import {
   IExchangeRate,
   IExchangeRatesRequestData,
   IExchangeRateData,
-  IPercentOfChangeObj,
 } from "../../interfaces/exchangeRatesInterfaces";
 
 import ExhangeRateElement from "../exchangeRateElement/exchangeRateElement";
@@ -67,6 +66,7 @@ export default function ExhangeRatesList() {
                   key={`exchRate_${index + 1}`}
                   itemCounter={index}
                   previousReqURL={previousReqURL}
+                  renderSomePreviousRates={setExhangeRatesData}
                 />
               );
             }

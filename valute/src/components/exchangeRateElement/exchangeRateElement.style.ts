@@ -12,6 +12,11 @@ const styles = createUseStyles({
   grayBg: {
     background: "#eeefed",
   },
+  exchangeRateElement_previous: {
+    background: "#FFE7BA",
+
+    "& > :first-child": {},
+  },
 
   exchangeRateElement__column: {
     position: "relative",

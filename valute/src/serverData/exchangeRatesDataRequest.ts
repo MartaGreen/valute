@@ -66,20 +66,30 @@ export async function getCountOfPreviousRates(
   saveArr: IExchangeRateData[],
   charCode: string
 ) {
-  if (i < count) {
-    i += 1;
-    const exchangeRatesData: IExchangeRatesRequestData | null =
-      await getExchangeRatesData(reqUrl);
+  const testSaveArr: IExchangeRateData[] = [];
+  const previousRatesDataArr: IExchangeRateData[] | null = await (async () => {
+    if (i < count) {
+      i += 1;
+      const exchangeRatesData: IExchangeRatesRequestData | null =
+        await getExchangeRatesData(reqUrl);
 
-    if (exchangeRatesData) {
-      reqUrl = exchangeRatesData.PreviousURL;
-      const exchangeRateData: IExchangeRateData =
-        exchangeRatesData.Valute[charCode];
-      saveArr.push(exchangeRateData);
+      if (exchangeRatesData) {
+        reqUrl = exchangeRatesData.PreviousURL;
+        const exchangeRateData: IExchangeRateData =
+          exchangeRatesData.Valute[charCode];
+        exchangeRateData.isPrevious = true;
+        saveArr.push(exchangeRateData);
 
-      getCountOfPreviousRates(count, i, reqUrl, saveArr, charCode);
+        await getCountOfPreviousRates(count, i, reqUrl, saveArr, charCode);
+      } else {
+        return null;
+      }
     }
-  }
+    return saveArr;
+  })();
 
-  return saveArr;
+  if (previousRatesDataArr === null) return [];
+  else {
+    return previousRatesDataArr;
+  }
 }

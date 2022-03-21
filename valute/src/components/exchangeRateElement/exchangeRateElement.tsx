@@ -14,10 +14,14 @@ export default function ExhangeRateElement({
   exchangeRateData,
   itemCounter,
   previousReqURL,
+  renderSomePreviousRates,
 }: {
   exchangeRateData: IExchangeRateData;
   itemCounter: number;
   previousReqURL: string;
+  renderSomePreviousRates: React.Dispatch<
+    React.SetStateAction<IExchangeRateData[]>
+  >;
 }) {
   const classes = styles();
 
@@ -26,8 +30,8 @@ export default function ExhangeRateElement({
     exchangeRateData.Previous
   );
 
-  const getPreviousRates = async () => {
-    const countOfPreviousRates: IExchangeRateData[] =
+  const showPreviousRates = async () => {
+    const countOfPreviousRates: IExchangeRateData[] | null =
       await getCountOfPreviousRates(
         COUNT_OF_PREVIOUS_RATES,
         0,
@@ -36,7 +40,17 @@ export default function ExhangeRateElement({
         exchangeRateData.CharCode
       );
 
-    console.log(countOfPreviousRates);
+    if (countOfPreviousRates) {
+      renderSomePreviousRates((state: IExchangeRateData[]) => {
+        const index: number = state.indexOf(exchangeRateData);
+        const newState: IExchangeRateData[] = insertionByIndex(
+          state,
+          countOfPreviousRates,
+          index
+        );
+        return newState;
+      });
+    }
   };
 
   return (
@@ -44,8 +58,10 @@ export default function ExhangeRateElement({
       title={exchangeRateData.Name}
       className={`${classes.exchangeRateElement} ${
         itemCounter % 2 !== 0 ? classes.grayBg : ""
+      } ${
+        exchangeRateData.isPrevious ? classes.exchangeRateElement_previous : ""
       }`}
-      onClick={async () => getPreviousRates()}
+      onClick={async () => showPreviousRates()}
     >
       <th
         className={classes.exchangeRateElement__column}
@@ -61,4 +77,15 @@ export default function ExhangeRateElement({
       </th>
     </tr>
   );
+}
+
+function insertionByIndex(
+  array: IExchangeRateData[],
+  insertion: IExchangeRateData[],
+  index: number
+) {
+  index += 1;
+  const arrayStart: IExchangeRateData[] = array.slice(0, index);
+  const arrayEnd: IExchangeRateData[] = array.slice(index);
+  return [...arrayStart, ...insertion, ...arrayEnd];
 }

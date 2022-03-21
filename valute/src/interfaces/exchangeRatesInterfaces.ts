@@ -18,6 +18,7 @@ export interface IExchangeRateData {
   Name: string;
   Value: number;
   Previous: number;
+  isPrevious: boolean;
 }
 
 export interface IPercentOfChangeObj {
