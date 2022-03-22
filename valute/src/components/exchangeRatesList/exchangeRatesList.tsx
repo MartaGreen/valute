@@ -18,6 +18,7 @@ export default function ExhangeRatesList() {
     [] as IExchangeRateData[]
   );
   const [previousReqURL, setPreviousReqURL] = useState("");
+  const [delIndex, setDelIndex] = useState(-1);
 
   useEffect(() => {
     const getReqData = async () => {
@@ -67,6 +68,8 @@ export default function ExhangeRatesList() {
                   itemCounter={index}
                   previousReqURL={previousReqURL}
                   renderSomePreviousRates={setExhangeRatesData}
+                  delIndex={delIndex}
+                  setDelIndex={setDelIndex}
                 />
               );
             }

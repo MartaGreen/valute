@@ -15,6 +15,8 @@ export default function ExhangeRateElement({
   itemCounter,
   previousReqURL,
   renderSomePreviousRates,
+  delIndex,
+  setDelIndex,
 }: {
   exchangeRateData: IExchangeRateData;
   itemCounter: number;
@@ -22,6 +24,8 @@ export default function ExhangeRateElement({
   renderSomePreviousRates: React.Dispatch<
     React.SetStateAction<IExchangeRateData[]>
   >;
+  delIndex: number;
+  setDelIndex: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const classes = styles();
 
@@ -42,9 +46,17 @@ export default function ExhangeRateElement({
 
     if (countOfPreviousRates) {
       renderSomePreviousRates((state: IExchangeRateData[]) => {
-        const index: number = state.indexOf(exchangeRateData);
-        const newState: IExchangeRateData[] = insertionByIndex(
+        const clearedState: IExchangeRateData[] = deleteByIndex(
           state,
+          delIndex,
+          COUNT_OF_PREVIOUS_RATES
+        );
+
+        const index: number = clearedState.indexOf(exchangeRateData);
+        setDelIndex(index);
+
+        const newState: IExchangeRateData[] = insertionByIndex(
+          clearedState,
           countOfPreviousRates,
           index
         );
@@ -85,7 +97,27 @@ function insertionByIndex(
   index: number
 ) {
   index += 1;
+
   const arrayStart: IExchangeRateData[] = array.slice(0, index);
   const arrayEnd: IExchangeRateData[] = array.slice(index);
   return [...arrayStart, ...insertion, ...arrayEnd];
+}
+
+function deleteByIndex(
+  array: IExchangeRateData[],
+  deleteIndex: number,
+  delCount: number
+) {
+  if (deleteIndex !== -1) {
+    deleteIndex += 1;
+    console.log(array[deleteIndex]);
+    const arrStart: IExchangeRateData[] = array.slice(0, deleteIndex);
+    const arrEnd: IExchangeRateData[] = array.slice(deleteIndex + delCount);
+    console.log(arrStart);
+    console.log(arrEnd);
+
+    return [...arrStart, ...arrEnd];
+  }
+
+  return array;
 }
