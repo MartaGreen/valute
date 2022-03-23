@@ -1,6 +1,9 @@
 import React from "react";
 import styles from "./exchangeRateElement.style";
-import { IExchangeRateData } from "../../interfaces/exchangeRatesInterfaces";
+import {
+  IExchangeRateData,
+  IExchangeRatesStore,
+} from "../../interfaces/exchangeRatesInterfaces";
 import {
   calculatePercentOfChange,
   getCountOfPreviousRates,
@@ -9,25 +12,23 @@ import { COUNT_OF_PREVIOUS_RATES } from "../../constants/requestsConstants";
 
 import PercentOfChangeIcon from "./percentOfChangeIcon/percentOfChangeIcon";
 import { useEffect } from "react";
+import { getPreviousRatesRequest } from "../../redux/slices/exchangeRatesSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ExchangeRateElement({
   exchangeRateData,
   itemCounter,
-}: // previousReqURL,
-// renderSomePreviousRates,
-// delIndex,
-// setDelIndex,
-{
+}: {
   exchangeRateData: IExchangeRateData;
   itemCounter: number;
-  // previousReqURL: string;
-  // renderSomePreviousRates: React.Dispatch<
-  //   React.SetStateAction<IExchangeRateData[]>
-  // >;
-  // delIndex: number;
-  // setDelIndex: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const classes = styles();
+
+  const storeData = useSelector(
+    (state: { exchangeRates: IExchangeRatesStore }) => state.exchangeRates
+  );
+  const previousUrl = storeData.previousUrl;
+  const dispatch = useDispatch();
 
   const percentOfChange: number = calculatePercentOfChange(
     exchangeRateData.Value,
@@ -35,32 +36,38 @@ export default function ExchangeRateElement({
   );
 
   const showPreviousRates = async () => {
-    // const countOfPreviousRates: IExchangeRateData[] | null =
-    //   await getCountOfPreviousRates(
-    //     COUNT_OF_PREVIOUS_RATES,
-    //     0,
-    //     previousReqURL,
-    //     [],
-    //     exchangeRateData.CharCode
-    //   );
-    // if (countOfPreviousRates) {
-    //   renderSomePreviousRates((state: IExchangeRateData[]) => {
-    //     const clearedState: IExchangeRateData[] = deleteByIndex(
-    //       state,
-    //       delIndex,
-    //       COUNT_OF_PREVIOUS_RATES
-    //     );
-    //     const index: number = clearedState.indexOf(exchangeRateData);
-    //     setDelIndex(index);
-    //     const newState: IExchangeRateData[] = insertionByIndex(
-    //       clearedState,
-    //       countOfPreviousRates,
-    //       index
-    //     );
-    //     return newState;
-    //   });
-    // }
+    dispatch(
+      getPreviousRatesRequest({
+        previousUrl,
+        charCode: exchangeRateData.CharCode,
+      })
+    );
   };
+  // const countOfPreviousRates: IExchangeRateData[] | null =
+  //   await getCountOfPreviousRates(
+  //     COUNT_OF_PREVIOUS_RATES,
+  //     0,
+  //     previousReqURL,
+  //     [],
+  //     exchangeRateData.CharCode
+  //   );
+  // if (countOfPreviousRates) {
+  //   renderSomePreviousRates((state: IExchangeRateData[]) => {
+  //     const clearedState: IExchangeRateData[] = deleteByIndex(
+  //       state,
+  //       delIndex,
+  //       COUNT_OF_PREVIOUS_RATES
+  //     );
+  //     const index: number = clearedState.indexOf(exchangeRateData);
+  //     setDelIndex(index);
+  //     const newState: IExchangeRateData[] = insertionByIndex(
+  //       clearedState,
+  //       countOfPreviousRates,
+  //       index
+  //     );
+  //     return newState;
+  //   });
+  // }
 
   return (
     <tr
@@ -88,33 +95,33 @@ export default function ExchangeRateElement({
   );
 }
 
-function insertionByIndex(
-  array: IExchangeRateData[],
-  insertion: IExchangeRateData[],
-  index: number
-) {
-  index += 1;
+// function insertionByIndex(
+//   array: IExchangeRateData[],
+//   insertion: IExchangeRateData[],
+//   index: number
+// ) {
+//   index += 1;
 
-  const arrayStart: IExchangeRateData[] = array.slice(0, index);
-  const arrayEnd: IExchangeRateData[] = array.slice(index);
-  return [...arrayStart, ...insertion, ...arrayEnd];
-}
+//   const arrayStart: IExchangeRateData[] = array.slice(0, index);
+//   const arrayEnd: IExchangeRateData[] = array.slice(index);
+//   return [...arrayStart, ...insertion, ...arrayEnd];
+// }
 
-function deleteByIndex(
-  array: IExchangeRateData[],
-  deleteIndex: number,
-  delCount: number
-) {
-  if (deleteIndex !== -1) {
-    deleteIndex += 1;
-    console.log(array[deleteIndex]);
-    const arrStart: IExchangeRateData[] = array.slice(0, deleteIndex);
-    const arrEnd: IExchangeRateData[] = array.slice(deleteIndex + delCount);
-    console.log(arrStart);
-    console.log(arrEnd);
+// function deleteByIndex(
+//   array: IExchangeRateData[],
+//   deleteIndex: number,
+//   delCount: number
+// ) {
+//   if (deleteIndex !== -1) {
+//     deleteIndex += 1;
+//     console.log(array[deleteIndex]);
+//     const arrStart: IExchangeRateData[] = array.slice(0, deleteIndex);
+//     const arrEnd: IExchangeRateData[] = array.slice(deleteIndex + delCount);
+//     console.log(arrStart);
+//     console.log(arrEnd);
 
-    return [...arrStart, ...arrEnd];
-  }
+//     return [...arrStart, ...arrEnd];
+//   }
 
-  return array;
-}
+//   return array;
+// }

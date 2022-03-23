@@ -28,9 +28,6 @@ export default function ExhangeRatesList() {
     dispatch(exchangeRatesRequest());
   }, []);
 
-  const [previousReqURL, setPreviousReqURL] = useState("");
-  const [delIndex, setDelIndex] = useState(-1);
-
   // useEffect(() => {
   //   const getReqData = async () => {
   //     const exchangeRatesReqData: IExchangeRatesRequestData | null =

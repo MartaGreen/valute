@@ -18,33 +18,6 @@ export async function getExchangeRatesData(requestURL: string) {
   }
 }
 
-// export async function getPercentOfChange(
-//   previousRequestURL: string,
-//   todayExchangeRatesArray: IExchangeRateData[]
-// ) {
-//   const previosExchangeRatesResponse: IExchangeRatesRequestData | null =
-//     await getExchangeRatesData(previousRequestURL);
-//   const previousExchangesRateData: IExchangeRate | undefined =
-//     previosExchangeRatesResponse?.Valute;
-
-//   const percentOfChangeObj: IPercentOfChangeObj = {};
-
-//   if (previousExchangesRateData) {
-//     todayExchangeRatesArray.forEach((exchangeRate) => {
-//       const previousExchangeRate: number =
-//         previousExchangesRateData[exchangeRate.CharCode].Value;
-//       const changePercent = calculatePercentOfChange(
-//         exchangeRate.Value,
-//         previousExchangeRate
-//       );
-
-//       percentOfChangeObj[exchangeRate.CharCode] = changePercent;
-//     });
-//   }
-
-//   return percentOfChangeObj;
-// }
-
 export function calculatePercentOfChange(
   newValue: number,
   previousValue: number
@@ -68,7 +41,6 @@ export async function getCountOfPreviousRates(
   saveArr: IExchangeRateData[],
   charCode: string
 ) {
-  const testSaveArr: IExchangeRateData[] = [];
   const previousRatesDataArr: IExchangeRateData[] | null = await (async () => {
     if (i < count) {
       i += 1;
@@ -89,9 +61,5 @@ export async function getCountOfPreviousRates(
     }
     return saveArr;
   })();
-
-  if (previousRatesDataArr === null) return [];
-  else {
-    return previousRatesDataArr;
-  }
+  return previousRatesDataArr;
 }
