@@ -22,7 +22,7 @@ const styles = createUseStyles({
     position: "absolute",
     left: "12%",
 
-    width: 0,
+    width: "0 !important",
     height: 0,
     borderLeft: "10px solid transparent",
     borderRight: "10px solid transparent",

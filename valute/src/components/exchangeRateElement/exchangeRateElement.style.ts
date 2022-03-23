@@ -20,6 +20,7 @@ const styles = createUseStyles({
 
   exchangeRateElement__column: {
     position: "relative",
+    textAlign: "center",
 
     padding: 20,
   },

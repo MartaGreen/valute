@@ -25,6 +25,13 @@ export default function PrevExchangeRatesList({}: {}) {
           "Loading ..."
         ) : (
           <table className={classes.prevRatesTable}>
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
             <tbody>
               {prevExchangeRatesList.map(
                 (prevElem: IExchangeRateData, index: number) => (
