@@ -27,32 +27,6 @@ export default function ExhangeRatesList() {
     dispatch(exchangeRatesRequest());
   }, []);
 
-  // useEffect(() => {
-  //   const getReqData = async () => {
-  //     const exchangeRatesReqData: IExchangeRatesRequestData | null =
-  //       await getExchangeRatesData(TODAY_REQUEST_URL);
-
-  //     if (exchangeRatesReqData) {
-  //       const exchangeRatesDataArray: IExchangeRateData[] = ObjectToArray(
-  //         exchangeRatesReqData.Valute
-  //       );
-  //       setExhangeRatesData(exchangeRatesDataArray);
-
-  //       const previousExchangeRatesURL = exchangeRatesReqData.PreviousURL;
-  //       setPreviousReqURL(previousExchangeRatesURL);
-  //       // const percentOfChangeObj = await getPercentOfChange(
-  //       //   previousExchangeRatesURL,
-  //       //   exchangeRatesDataArray
-  //       // );
-  //       // setPercentOfChange(percentOfChangeObj);
-  //     }
-  //   };
-
-  //   getReqData().catch((err) =>
-  //     console.log("error occurred while getting data in useEffect", err)
-  //   );
-  // }, []);
-
   return (
     <table className={classes.exchangeRateList}>
       <thead className={classes.exchangeRateList__header}>
@@ -67,7 +41,9 @@ export default function ExhangeRatesList() {
       <tbody>
         {status === REQUEST_STATUS.pending ? (
           <tr>
-            <td colSpan={3}>Loading ...</td>
+            <td colSpan={3} style={{ textAlign: "center" }}>
+              Loading ...
+            </td>
           </tr>
         ) : (
           exchangeRatesData.map(

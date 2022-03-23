@@ -27,6 +27,7 @@ export interface IPercentOfChangeObj {
 
 export interface IExchangeRatesStore {
   status: string;
+  prevRatesStatus: string;
   exchangeRatesData: IExchangeRateData[];
   previousUrl: string;
   countOfPreviousRates: IExchangeRateData[];

@@ -48,6 +48,7 @@ export const exchangeRatesSlice = createSlice({
   name: "exchangeRates",
   initialState: {
     status: "empty",
+    prevRatesStatus: "empty",
     previousUrl: "",
     exchangeRatesData: [] as IExchangeRateData[],
     countOfPreviousRates: [] as IExchangeRateData[],
@@ -68,7 +69,11 @@ export const exchangeRatesSlice = createSlice({
       state.previousUrl = action.payload.PreviousURL;
     });
 
+    builder.addCase(getPreviousRatesRequest.pending, (state) => {
+      state.prevRatesStatus = REQUEST_STATUS.pending;
+    });
     builder.addCase(getPreviousRatesRequest.fulfilled, (state, action) => {
+      state.prevRatesStatus = REQUEST_STATUS.success;
       state.countOfPreviousRates = action.payload;
     });
   },

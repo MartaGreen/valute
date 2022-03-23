@@ -6,7 +6,7 @@ import {
 } from "../../interfaces/exchangeRatesInterfaces";
 import { calculatePercentOfChange } from "../../serverData/exchangeRatesDataRequest";
 
-import PercentOfChangeIcon from "./percentOfChangeIcon/percentOfChangeIcon";
+import PercentOfChangeIcon from "../percentOfChangeIcon/percentOfChangeIcon";
 import { useEffect } from "react";
 import {
   getPreviousRatesRequest,

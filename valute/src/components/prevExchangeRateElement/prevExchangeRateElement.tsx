@@ -1,23 +1,28 @@
 import React from "react";
 import { IExchangeRateData } from "../../interfaces/exchangeRatesInterfaces";
 import { calculatePercentOfChange } from "../../serverData/exchangeRatesDataRequest";
-import PercentOfChangeIcon from "../exchangeRateElement/percentOfChangeIcon/percentOfChangeIcon";
+import PercentOfChangeIcon from "../percentOfChangeIcon/percentOfChangeIcon";
+import styles from "./prevExchangeRateElement.style";
 
 export default function PrevExchangeRateElement({
   prevExchangeRate,
 }: {
   prevExchangeRate: IExchangeRateData;
 }) {
+  const classes = styles();
+
   const percentOfChange: number = calculatePercentOfChange(
     prevExchangeRate.Value,
     prevExchangeRate.Previous
   );
 
   return (
-    <tr>
-      <td>{`${prevExchangeRate.CharCode} ${prevExchangeRate.NumCode}`}</td>
-      <td>{prevExchangeRate.Value}</td>
-      <td>
+    <tr className={classes.prevRateLine}>
+      <td
+        className={classes.prevRateLine__td}
+      >{`${prevExchangeRate.CharCode} ${prevExchangeRate.NumCode}`}</td>
+      <td className={classes.prevRateLine__td}>{prevExchangeRate.Value}</td>
+      <td className={classes.prevRateLine__td}>
         <PercentOfChangeIcon isIncrease={percentOfChange > 0} />
         {percentOfChange}
       </td>
