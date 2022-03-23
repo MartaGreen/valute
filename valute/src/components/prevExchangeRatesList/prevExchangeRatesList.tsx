@@ -9,12 +9,13 @@ import { REQUEST_STATUS } from "../../constants/requestsConstants";
 
 import PrevExchangeRateElement from "../prevExchangeRateElement/prevExchangeRateElement";
 
-export default function PrevExchangeRatesList({}: {}) {
+export default function PrevExchangeRatesList() {
   const classes = styles();
 
   const storeData = useSelector(
     (state: { exchangeRates: IExchangeRatesStore }) => state.exchangeRates
   );
+  console.log("data", storeData);
   const prevExchangeRatesList = storeData.countOfPreviousRates;
   const status = storeData.prevRatesStatus;
 

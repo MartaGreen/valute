@@ -11,17 +11,19 @@ export function ObjectToArray(obj: IExchangeRate) {
   return exchangeRatesArray;
 }
 
-// function insertionByIndex(
-//   array: IExchangeRateData[],
-//   insertion: IExchangeRateData[],
-//   index: number
-// ) {
-//   index += 1;
-
-//   const arrayStart: IExchangeRateData[] = array.slice(0, index);
-//   const arrayEnd: IExchangeRateData[] = array.slice(index);
-//   return [...arrayStart, ...insertion, ...arrayEnd];
-// }
+export function insertionByIndex(
+  array: IExchangeRateData[],
+  insertion: IExchangeRateData[],
+  index: number
+) {
+  if (index) {
+    const arrayStart: IExchangeRateData[] = array.slice(0, index);
+    const arrayEnd: IExchangeRateData[] = array.slice(index);
+    return [...arrayStart, ...insertion, ...arrayEnd];
+  } else {
+    return array;
+  }
+}
 
 // function deleteByIndex(
 //   array: IExchangeRateData[],

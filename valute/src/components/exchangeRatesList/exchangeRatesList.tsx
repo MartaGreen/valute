@@ -8,6 +8,7 @@ import {
   IExchangeRateData,
   IExchangeRatesStore,
 } from "../../interfaces/exchangeRatesInterfaces";
+import { insertionByIndex } from "../../shared/arrayFunctions";
 
 import ExchangeRateElement from "../exchangeRateElement/exchangeRateElement";
 import PrevExchangeRatesList from "../prevExchangeRatesList/prevExchangeRatesList";
@@ -22,6 +23,12 @@ export default function ExhangeRatesList() {
   const exchangeRatesData: IExchangeRateData[] = storeData.exchangeRatesData;
   const insertionIndex: number = storeData.insertionIndex;
   const dispatch = useDispatch();
+
+  const exchangeRates: IExchangeRateData[] = insertionByIndex(
+    exchangeRatesData,
+    [{} as IExchangeRateData],
+    insertionIndex
+  );
 
   useEffect(() => {
     dispatch(exchangeRatesRequest());
@@ -46,9 +53,9 @@ export default function ExhangeRatesList() {
             </td>
           </tr>
         ) : (
-          exchangeRatesData.map(
+          exchangeRates.map(
             (exchangeRate: IExchangeRateData, index: number) => {
-              if (index === insertionIndex)
+              if (!Object.keys(exchangeRate).length)
                 return <PrevExchangeRatesList key={`exch_rate-${index}`} />;
               else
                 return (
