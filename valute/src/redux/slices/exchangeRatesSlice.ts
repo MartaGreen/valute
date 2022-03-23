@@ -50,16 +50,16 @@ export const exchangeRatesSlice = createSlice({
     status: "empty",
     previousUrl: "",
     exchangeRatesData: [] as IExchangeRateData[],
-    countOfPreviousRates: [],
+    countOfPreviousRates: [] as IExchangeRateData[],
+    insertionIndex: NaN,
   },
   reducers: {
-    getPreviousRates: (state, action) => {
-      console.log(action);
+    setInsertionIndex: (state, action) => {
+      state.insertionIndex = action.payload + 1;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(exchangeRatesRequest.pending, (state) => {
-      console.log("pending");
       state.status = REQUEST_STATUS.pending;
     });
     builder.addCase(exchangeRatesRequest.fulfilled, (state, action) => {
@@ -69,9 +69,10 @@ export const exchangeRatesSlice = createSlice({
     });
 
     builder.addCase(getPreviousRatesRequest.fulfilled, (state, action) => {
-      console.log(action.payload);
+      state.countOfPreviousRates = action.payload;
     });
   },
 });
 
+export const { setInsertionIndex } = exchangeRatesSlice.actions;
 export default exchangeRatesSlice.reducer;

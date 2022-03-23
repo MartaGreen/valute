@@ -4,15 +4,14 @@ import {
   IExchangeRateData,
   IExchangeRatesStore,
 } from "../../interfaces/exchangeRatesInterfaces";
-import {
-  calculatePercentOfChange,
-  getCountOfPreviousRates,
-} from "../../serverData/exchangeRatesDataRequest";
-import { COUNT_OF_PREVIOUS_RATES } from "../../constants/requestsConstants";
+import { calculatePercentOfChange } from "../../serverData/exchangeRatesDataRequest";
 
 import PercentOfChangeIcon from "./percentOfChangeIcon/percentOfChangeIcon";
 import { useEffect } from "react";
-import { getPreviousRatesRequest } from "../../redux/slices/exchangeRatesSlice";
+import {
+  getPreviousRatesRequest,
+  setInsertionIndex,
+} from "../../redux/slices/exchangeRatesSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ExchangeRateElement({
@@ -29,6 +28,7 @@ export default function ExchangeRateElement({
   );
   const previousUrl = storeData.previousUrl;
   const dispatch = useDispatch();
+  const exchangeRatesData: IExchangeRateData[] = storeData.exchangeRatesData;
 
   const percentOfChange: number = calculatePercentOfChange(
     exchangeRateData.Value,
@@ -42,6 +42,9 @@ export default function ExchangeRateElement({
         charCode: exchangeRateData.CharCode,
       })
     );
+
+    const index: number = exchangeRatesData.indexOf(exchangeRateData);
+    dispatch(setInsertionIndex(index));
   };
   // const countOfPreviousRates: IExchangeRateData[] | null =
   //   await getCountOfPreviousRates(

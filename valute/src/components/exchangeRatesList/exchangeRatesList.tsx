@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./exchangeRatesList.style";
 import { useDispatch, useSelector } from "react-redux";
 import { exchangeRatesRequest } from "../../redux/slices/exchangeRatesSlice";
 
-import { getExchangeRatesData } from "../../serverData/exchangeRatesDataRequest";
 import { REQUEST_STATUS } from "../../constants/requestsConstants";
 import {
-  IExchangeRate,
-  IExchangeRatesRequestData,
   IExchangeRateData,
   IExchangeRatesStore,
 } from "../../interfaces/exchangeRatesInterfaces";
 
 import ExchangeRateElement from "../exchangeRateElement/exchangeRateElement";
+import PrevExchangeRatesList from "../prevExchangeRatesList/prevExchangeRatesList";
 
 export default function ExhangeRatesList() {
   const classes = styles();
@@ -22,6 +20,7 @@ export default function ExhangeRatesList() {
   );
   const status: string = storeData.status;
   const exchangeRatesData: IExchangeRateData[] = storeData.exchangeRatesData;
+  const insertionIndex: number = storeData.insertionIndex;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -72,13 +71,18 @@ export default function ExhangeRatesList() {
           </tr>
         ) : (
           exchangeRatesData.map(
-            (exchangeRate: IExchangeRateData, index: number) => (
-              <ExchangeRateElement
-                exchangeRateData={exchangeRate}
-                itemCounter={index}
-                key={`exch_rate-${index}`}
-              />
-            )
+            (exchangeRate: IExchangeRateData, index: number) => {
+              if (index === insertionIndex)
+                return <PrevExchangeRatesList key={`exch_rate-${index}`} />;
+              else
+                return (
+                  <ExchangeRateElement
+                    exchangeRateData={exchangeRate}
+                    itemCounter={index}
+                    key={`exch_rate-${index}`}
+                  />
+                );
+            }
           )
         )}
       </tbody>
