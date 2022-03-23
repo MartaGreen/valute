@@ -1,50 +1,61 @@
 import React, { useEffect, useState } from "react";
 import styles from "./exchangeRatesList.style";
+import { useDispatch, useSelector } from "react-redux";
+import { exchangeRatesRequest } from "../../redux/slices/exchangeRatesSlice";
 
 import { getExchangeRatesData } from "../../serverData/exchangeRatesDataRequest";
-import { TODAY_REQUEST_URL } from "../../constants/requestsConstants";
+import { REQUEST_STATUS } from "../../constants/requestsConstants";
 import {
   IExchangeRate,
   IExchangeRatesRequestData,
   IExchangeRateData,
+  IExchangeRatesStore,
 } from "../../interfaces/exchangeRatesInterfaces";
 
-import ExhangeRateElement from "../exchangeRateElement/exchangeRateElement";
+import ExchangeRateElement from "../exchangeRateElement/exchangeRateElement";
 
 export default function ExhangeRatesList() {
   const classes = styles();
 
-  const [exchangeRatesData, setExhangeRatesData] = useState(
-    [] as IExchangeRateData[]
+  const storeData = useSelector(
+    (state: { exchangeRates: IExchangeRatesStore }) => state.exchangeRates
   );
+  const status: string = storeData.status;
+  const exchangeRatesData: IExchangeRateData[] = storeData.exchangeRatesData;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(exchangeRatesRequest());
+  }, []);
+
   const [previousReqURL, setPreviousReqURL] = useState("");
   const [delIndex, setDelIndex] = useState(-1);
 
-  useEffect(() => {
-    const getReqData = async () => {
-      const exchangeRatesReqData: IExchangeRatesRequestData | null =
-        await getExchangeRatesData(TODAY_REQUEST_URL);
+  // useEffect(() => {
+  //   const getReqData = async () => {
+  //     const exchangeRatesReqData: IExchangeRatesRequestData | null =
+  //       await getExchangeRatesData(TODAY_REQUEST_URL);
 
-      if (exchangeRatesReqData) {
-        const exchangeRatesDataArray: IExchangeRateData[] = ObjectToArray(
-          exchangeRatesReqData.Valute
-        );
-        setExhangeRatesData(exchangeRatesDataArray);
+  //     if (exchangeRatesReqData) {
+  //       const exchangeRatesDataArray: IExchangeRateData[] = ObjectToArray(
+  //         exchangeRatesReqData.Valute
+  //       );
+  //       setExhangeRatesData(exchangeRatesDataArray);
 
-        const previousExchangeRatesURL = exchangeRatesReqData.PreviousURL;
-        setPreviousReqURL(previousExchangeRatesURL);
-        // const percentOfChangeObj = await getPercentOfChange(
-        //   previousExchangeRatesURL,
-        //   exchangeRatesDataArray
-        // );
-        // setPercentOfChange(percentOfChangeObj);
-      }
-    };
+  //       const previousExchangeRatesURL = exchangeRatesReqData.PreviousURL;
+  //       setPreviousReqURL(previousExchangeRatesURL);
+  //       // const percentOfChangeObj = await getPercentOfChange(
+  //       //   previousExchangeRatesURL,
+  //       //   exchangeRatesDataArray
+  //       // );
+  //       // setPercentOfChange(percentOfChangeObj);
+  //     }
+  //   };
 
-    getReqData().catch((err) =>
-      console.log("error occurred while getting data in useEffect", err)
-    );
-  }, []);
+  //   getReqData().catch((err) =>
+  //     console.log("error occurred while getting data in useEffect", err)
+  //   );
+  // }, []);
 
   return (
     <table className={classes.exchangeRateList}>
@@ -58,36 +69,22 @@ export default function ExhangeRatesList() {
         </tr>
       </thead>
       <tbody>
-        {exchangeRatesData.length ? (
-          exchangeRatesData.map(
-            (exchangeRateItem: IExchangeRateData, index: number) => {
-              return (
-                <ExhangeRateElement
-                  exchangeRateData={exchangeRateItem}
-                  key={`exchRate_${index + 1}`}
-                  itemCounter={index}
-                  previousReqURL={previousReqURL}
-                  renderSomePreviousRates={setExhangeRatesData}
-                  delIndex={delIndex}
-                  setDelIndex={setDelIndex}
-                />
-              );
-            }
-          )
-        ) : (
-          <tr className={classes.loadingList}>
+        {status === REQUEST_STATUS.pending ? (
+          <tr>
             <td colSpan={3}>Loading ...</td>
           </tr>
+        ) : (
+          exchangeRatesData.map(
+            (exchangeRate: IExchangeRateData, index: number) => (
+              <ExchangeRateElement
+                exchangeRateData={exchangeRate}
+                itemCounter={index}
+                key={`exch_rate-${index}`}
+              />
+            )
+          )
         )}
       </tbody>
     </table>
   );
-}
-
-function ObjectToArray(obj: IExchangeRate) {
-  const exchangeRatesNames: string[] = Object.keys(obj);
-  const exchangeRatesArray: IExchangeRateData[] = exchangeRatesNames.map(
-    (exchangeRateName) => obj[exchangeRateName]
-  );
-  return exchangeRatesArray;
 }

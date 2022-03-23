@@ -10,22 +10,22 @@ import { COUNT_OF_PREVIOUS_RATES } from "../../constants/requestsConstants";
 import PercentOfChangeIcon from "./percentOfChangeIcon/percentOfChangeIcon";
 import { useEffect } from "react";
 
-export default function ExhangeRateElement({
+export default function ExchangeRateElement({
   exchangeRateData,
   itemCounter,
-  previousReqURL,
-  renderSomePreviousRates,
-  delIndex,
-  setDelIndex,
-}: {
+}: // previousReqURL,
+// renderSomePreviousRates,
+// delIndex,
+// setDelIndex,
+{
   exchangeRateData: IExchangeRateData;
   itemCounter: number;
-  previousReqURL: string;
-  renderSomePreviousRates: React.Dispatch<
-    React.SetStateAction<IExchangeRateData[]>
-  >;
-  delIndex: number;
-  setDelIndex: React.Dispatch<React.SetStateAction<number>>;
+  // previousReqURL: string;
+  // renderSomePreviousRates: React.Dispatch<
+  //   React.SetStateAction<IExchangeRateData[]>
+  // >;
+  // delIndex: number;
+  // setDelIndex: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const classes = styles();
 
@@ -35,34 +35,31 @@ export default function ExhangeRateElement({
   );
 
   const showPreviousRates = async () => {
-    const countOfPreviousRates: IExchangeRateData[] | null =
-      await getCountOfPreviousRates(
-        COUNT_OF_PREVIOUS_RATES,
-        0,
-        previousReqURL,
-        [],
-        exchangeRateData.CharCode
-      );
-
-    if (countOfPreviousRates) {
-      renderSomePreviousRates((state: IExchangeRateData[]) => {
-        const clearedState: IExchangeRateData[] = deleteByIndex(
-          state,
-          delIndex,
-          COUNT_OF_PREVIOUS_RATES
-        );
-
-        const index: number = clearedState.indexOf(exchangeRateData);
-        setDelIndex(index);
-
-        const newState: IExchangeRateData[] = insertionByIndex(
-          clearedState,
-          countOfPreviousRates,
-          index
-        );
-        return newState;
-      });
-    }
+    // const countOfPreviousRates: IExchangeRateData[] | null =
+    //   await getCountOfPreviousRates(
+    //     COUNT_OF_PREVIOUS_RATES,
+    //     0,
+    //     previousReqURL,
+    //     [],
+    //     exchangeRateData.CharCode
+    //   );
+    // if (countOfPreviousRates) {
+    //   renderSomePreviousRates((state: IExchangeRateData[]) => {
+    //     const clearedState: IExchangeRateData[] = deleteByIndex(
+    //       state,
+    //       delIndex,
+    //       COUNT_OF_PREVIOUS_RATES
+    //     );
+    //     const index: number = clearedState.indexOf(exchangeRateData);
+    //     setDelIndex(index);
+    //     const newState: IExchangeRateData[] = insertionByIndex(
+    //       clearedState,
+    //       countOfPreviousRates,
+    //       index
+    //     );
+    //     return newState;
+    //   });
+    // }
   };
 
   return (

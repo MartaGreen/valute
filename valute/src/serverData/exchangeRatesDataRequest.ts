@@ -4,8 +4,10 @@ import {
 } from "../interfaces/exchangeRatesInterfaces";
 
 export async function getExchangeRatesData(requestURL: string) {
+  console.log("exchange request");
   try {
     const exchangeRatesResponse: Response = await fetch(requestURL);
+    if (!exchangeRatesResponse.ok) throw new Error("Server error!");
     const exchangeRatesReqData: IExchangeRatesRequestData =
       await exchangeRatesResponse.json();
 

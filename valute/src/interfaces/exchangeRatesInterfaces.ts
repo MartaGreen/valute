@@ -24,3 +24,10 @@ export interface IExchangeRateData {
 export interface IPercentOfChangeObj {
   [exchangeRateCode: string]: number;
 }
+
+export interface IExchangeRatesStore {
+  status: string;
+  exchangeRatesData: [];
+  previousUrl: string;
+  countOfPreviousRates: [];
+}
