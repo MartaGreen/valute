@@ -2,19 +2,29 @@ import React from "react";
 import { createUseStyles } from "react-jss";
 
 export default function PercentOfChangeIcon({
-  isIncrease,
+  percentOfChange,
 }: {
-  isIncrease: boolean;
+  percentOfChange: number;
 }) {
   const classes = styles();
+  const isIncrease: boolean = percentOfChange > 0;
 
-  return (
-    <div
-      className={`${classes.triangle} ${
-        isIncrease ? classes.triangle_increase : classes.triangle_decrease
-      }`}
-    ></div>
-  );
+  if (percentOfChange !== 0) {
+    return (
+      <div
+        className={`${classes.triangle} ${
+          isIncrease ? classes.triangle_increase : classes.triangle_decrease
+        }`}
+      ></div>
+    );
+  } else {
+    return (
+      <div className={classes.equals}>
+        <div className={classes.equals__item}></div>
+        <div className={classes.equals__item}></div>
+      </div>
+    );
+  }
 }
 
 const styles = createUseStyles({
@@ -33,5 +43,24 @@ const styles = createUseStyles({
 
   triangle_decrease: {
     borderTop: "21px solid #f95959;",
+  },
+
+  equals: {
+    position: "absolute",
+    left: "10.5%",
+    top: "36%",
+
+    width: "30px !important",
+    height: 17,
+
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  equals__item: {
+    width: "100% !important",
+    height: 5,
+
+    background: "black",
   },
 });

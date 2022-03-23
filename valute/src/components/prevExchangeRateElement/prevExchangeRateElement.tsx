@@ -23,7 +23,7 @@ export default function PrevExchangeRateElement({
       >{`${prevExchangeRate.CharCode} ${prevExchangeRate.NumCode}`}</td>
       <td className={classes.prevRateLine__td}>{prevExchangeRate.Value}</td>
       <td className={classes.prevRateLine__td}>
-        <PercentOfChangeIcon isIncrease={percentOfChange > 0} />
+        <PercentOfChangeIcon percentOfChange={percentOfChange} />
         {percentOfChange}
       </td>
     </tr>

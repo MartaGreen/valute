@@ -65,7 +65,7 @@ export default function ExchangeRateElement({
       <td
         className={`${classes.exchangeRateElement__column} ${classes.exchangeRateElement__percOfChange}`}
       >
-        <PercentOfChangeIcon isIncrease={percentOfChange > 0} />
+        <PercentOfChangeIcon percentOfChange={percentOfChange} />
         {percentOfChange}
       </td>
     </tr>
