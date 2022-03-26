@@ -33,4 +33,5 @@ export interface IExchangeRatesStore {
   countOfPreviousRates: IExchangeRateData[];
   insertionIndex: number;
   initialExchangeRatesData: IExchangeRateData[];
+  isClosed: boolean;
 }

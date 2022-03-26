@@ -26,8 +26,9 @@ export default function ExchangeRateElement({
     (state: { exchangeRates: IExchangeRatesStore }) => state.exchangeRates
   );
   const previousUrl = storeData.previousUrl;
-  const dispatch = useDispatch();
   const exchangeRatesData: IExchangeRateData[] = storeData.exchangeRatesData;
+  const insertionIndex: number = storeData.insertionIndex;
+  const dispatch = useDispatch();
 
   const percentOfChange: number = calculatePercentOfChange(
     exchangeRateData.Value,
@@ -35,15 +36,22 @@ export default function ExchangeRateElement({
   );
 
   const showPreviousRates = async () => {
-    dispatch(
-      getPreviousRatesRequest({
-        previousUrl,
-        charCode: exchangeRateData.CharCode,
-      })
-    );
-
     const index: number = exchangeRatesData.indexOf(exchangeRateData);
     dispatch(setInsertionIndex(index));
+
+    if (index + 1 !== insertionIndex) {
+      dispatch(
+        getPreviousRatesRequest({
+          previousUrl,
+          charCode: exchangeRateData.CharCode,
+        })
+      );
+
+      // dispatch(setInsertionIndex(index));
+    }
+    // } else {
+    //   dispatch(setInsertionIndex(NaN));
+    // }
   };
 
   return (

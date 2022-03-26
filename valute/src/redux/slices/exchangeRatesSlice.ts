@@ -8,7 +8,7 @@ import {
   IExchangeRateData,
   IExchangeRatesRequestData,
 } from "../../interfaces/exchangeRatesInterfaces";
-import { ObjectToArray } from "../../shared/arrayFunctions";
+import { insertionByIndex, ObjectToArray } from "../../shared/arrayFunctions";
 import {
   REQUEST_STATUS,
   COUNT_OF_PREVIOUS_RATES,
@@ -53,10 +53,15 @@ export const exchangeRatesSlice = createSlice({
     exchangeRatesData: [] as IExchangeRateData[],
     countOfPreviousRates: [] as IExchangeRateData[],
     insertionIndex: NaN,
+    isClosed: false,
   },
   reducers: {
     setInsertionIndex: (state, action) => {
-      state.insertionIndex = action.payload + 1;
+      if (state.insertionIndex !== action.payload + 1) {
+        state.insertionIndex = action.payload + 1;
+      } else {
+        state.insertionIndex = NaN;
+      }
     },
   },
   extraReducers: (builder) => {

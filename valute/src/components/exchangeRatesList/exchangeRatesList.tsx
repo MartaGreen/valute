@@ -24,6 +24,7 @@ export default function ExhangeRatesList() {
   const insertionIndex: number = storeData.insertionIndex;
   const dispatch = useDispatch();
 
+  // insert empty object as a symbol to render previous values
   const exchangeRates: IExchangeRateData[] = insertionByIndex(
     exchangeRatesData,
     [{} as IExchangeRateData],

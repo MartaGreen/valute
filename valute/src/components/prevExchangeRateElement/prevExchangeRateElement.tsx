@@ -17,7 +17,7 @@ export default function PrevExchangeRateElement({
   );
 
   return (
-    <tr className={classes.prevRateLine}>
+    <tr className={classes.prevRateLine} title={prevExchangeRate.Name}>
       <td
         className={classes.prevRateLine__td}
       >{`${prevExchangeRate.CharCode} ${prevExchangeRate.NumCode}`}</td>

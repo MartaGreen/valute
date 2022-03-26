@@ -15,7 +15,6 @@ export default function PrevExchangeRatesList() {
   const storeData = useSelector(
     (state: { exchangeRates: IExchangeRatesStore }) => state.exchangeRates
   );
-  console.log("data", storeData);
   const prevExchangeRatesList = storeData.countOfPreviousRates;
   const status = storeData.prevRatesStatus;
 
