@@ -17,13 +17,12 @@ export default function PrevExchangeRatesList() {
   );
   const prevExchangeRatesList = storeData.countOfPreviousRates;
   const status = storeData.prevRatesStatus;
+  const waitMsg: string = storeData.waitMsg;
 
   return (
     <tr>
       <td colSpan={3} style={{ textAlign: "center" }}>
-        {status === REQUEST_STATUS.pending ? (
-          "Loading ..."
-        ) : (
+        {status === REQUEST_STATUS.success ? (
           <table className={classes.prevRatesTable}>
             <thead>
               <tr>
@@ -43,6 +42,8 @@ export default function PrevExchangeRatesList() {
               )}
             </tbody>
           </table>
+        ) : (
+          waitMsg
         )}
       </td>
     </tr>

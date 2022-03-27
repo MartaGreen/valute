@@ -34,4 +34,5 @@ export interface IExchangeRatesStore {
   insertionIndex: number;
   initialExchangeRatesData: IExchangeRateData[];
   isClosed: boolean;
+  waitMsg: string;
 }

@@ -6,3 +6,8 @@ export const REQUEST_STATUS = {
   success: "SUCCESS",
   error: "ERROR",
 };
+
+export const REQUEST_MSGS = {
+  pending: "Loading ...",
+  error: "Oops, something went wrong. Reload the page or try again later",
+};

@@ -22,6 +22,7 @@ export default function ExhangeRatesList() {
   const status: string = storeData.status;
   const exchangeRatesData: IExchangeRateData[] = storeData.exchangeRatesData;
   const insertionIndex: number = storeData.insertionIndex;
+  const waitMsg: string = storeData.waitMsg;
   const dispatch = useDispatch();
 
   // insert empty object as a symbol to render previous values
@@ -47,13 +48,7 @@ export default function ExhangeRatesList() {
         </tr>
       </thead>
       <tbody>
-        {status === REQUEST_STATUS.pending ? (
-          <tr>
-            <td colSpan={3} style={{ textAlign: "center" }}>
-              Loading ...
-            </td>
-          </tr>
-        ) : (
+        {status === REQUEST_STATUS.success ? (
           exchangeRates.map(
             (exchangeRate: IExchangeRateData, index: number) => {
               if (!Object.keys(exchangeRate).length)
@@ -68,6 +63,12 @@ export default function ExhangeRatesList() {
                 );
             }
           )
+        ) : (
+          <tr>
+            <td colSpan={3} style={{ textAlign: "center" }}>
+              {waitMsg}
+            </td>
+          </tr>
         )}
       </tbody>
     </table>

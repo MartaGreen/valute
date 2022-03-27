@@ -6,7 +6,8 @@ import {
 export async function getExchangeRatesData(requestURL: string) {
   try {
     const exchangeRatesResponse: Response = await fetch(requestURL);
-    if (!exchangeRatesResponse.ok) throw new Error("Server error!");
+    if (!exchangeRatesResponse.ok)
+      throw new Error(`Server error ${exchangeRatesResponse.statusText}`);
     const exchangeRatesReqData: IExchangeRatesRequestData =
       await exchangeRatesResponse.json();
 
