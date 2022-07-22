@@ -35,22 +35,21 @@ export default function ExchangeRate({
   };
 
   return (
-    <tr
-      title={exchangeRateData.Name}
-      className={`${classes.exchangeRateElement}`}
-      onClick={async () => showPreviousRates()}
-    >
+    <tr title={exchangeRateData.Name} className={`${classes.exchangeRate}`}>
       <td
-        className={classes.exchangeRateElement__column}
+        className={classes.exchangeRate__column}
       >{`${exchangeRateData.NumCode} ${exchangeRateData.CharCode}`}</td>
-      <td className={classes.exchangeRateElement__column}>
-        {exchangeRateData.Value}
-      </td>
+      <td className={classes.exchangeRate__column}>{exchangeRateData.Value}</td>
       <td
-        className={`${classes.exchangeRateElement__column} ${classes.exchangeRateElement__percOfChange}`}
+        className={`${classes.exchangeRate__column} ${classes.exchangeRate__percOfChange}`}
+        style={{ color: `${percentOfChange > 0 ? "green" : "red"}` }}
       >
-        <PercentOfChangeIcon percentOfChange={percentOfChange} />
         {percentOfChange}
+
+        <button
+          className={classes.exchangeRate__btn}
+          onClick={async () => showPreviousRates()}
+        ></button>
       </td>
     </tr>
   );

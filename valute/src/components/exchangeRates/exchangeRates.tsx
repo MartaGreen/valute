@@ -29,12 +29,12 @@ export default function ExchangeRates() {
   }, []);
 
   return (
-    <table className={classes.exchangeRateList}>
-      <thead className={classes.exchangeRateList__header}>
+    <table className={classes.exchangeRatesTable}>
+      <thead className={classes.exchangeRatesTable__header}>
         <tr>
-          <th className={classes.exchangeRateList__item}>Код валюты</th>
-          <th className={classes.exchangeRateList__item}>Курс (руб)</th>
-          <th className={classes.exchangeRateList__item}>
+          <th className={classes.exchangeRatesTable__item}>Код валюты</th>
+          <th className={classes.exchangeRatesTable__item}>Курс (руб)</th>
+          <th className={classes.exchangeRatesTable__item}>
             Изменение курса (%)
           </th>
         </tr>
@@ -49,21 +49,19 @@ export default function ExchangeRates() {
           </tr>
         )}
         {status === REQUEST_STATUS.success &&
-          exchangeRates.map(
-            (exchangeRate: ExchangeRateType | null, index: number) => {
-              if (!exchangeRate) {
-                return <PrevExchangeRates charCode={charCode} key={charCode} />;
-              }
-
-              charCode = exchangeRate.CharCode;
-              return (
-                <ExchangeRate
-                  exchangeRateData={exchangeRate}
-                  key={exchangeRate.ID}
-                />
-              );
+          exchangeRates.map((exchangeRate: ExchangeRateType | null) => {
+            if (!exchangeRate) {
+              return <PrevExchangeRates charCode={charCode} key={charCode} />;
             }
-          )}
+
+            charCode = exchangeRate.CharCode;
+            return (
+              <ExchangeRate
+                exchangeRateData={exchangeRate}
+                key={exchangeRate.ID}
+              />
+            );
+          })}
       </tbody>
     </table>
   );

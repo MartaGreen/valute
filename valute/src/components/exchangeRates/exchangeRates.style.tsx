@@ -1,21 +1,23 @@
 import { createUseStyles } from "react-jss";
 
 const styles = createUseStyles({
-  exchangeRateList: {
-    width: "100%",
-    minWidth: 320,
-    maxWidth: 1440,
+  exchangeRatesTable: {
+    width: "80%",
+    minWidth: 300,
+    maxWidth: 1000,
 
-    margin: "0 auto",
+    margin: "30px auto",
     borderCollapse: "collapse",
     border: 0,
+    boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+    borderRadius: 10,
   },
 
-  exchangeRateList__header: {
+  exchangeRatesTable__header: {
     background: "#e2e3e0",
   },
 
-  exchangeRateList__item: {
+  exchangeRatesTable__item: {
     padding: 30,
   },
 
