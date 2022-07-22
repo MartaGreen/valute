@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import { ExchangeRateStateType } from "../../types/exchange-rates.types";
-
-import { prevExchangeRatesReducer } from "../../redux/slices/exchange-rate.slice";
+import { PrevExchangeRateStateType } from "../../types/exchange-rates.types";
 import { ExchangeRateType } from "../../types/exchange-rates.types";
 
 function PrevExchangeRates({ charCode }: { charCode: string }) {
-  const storeData: ExchangeRateStateType = useSelector(
-    (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
+  const storeData = useSelector(
+    (state: { prevExchangeRates: PrevExchangeRateStateType }) =>
+      state.prevExchangeRates
   );
   const activeCharCode: string | null = storeData.activeExchangeRate;
-  const prevExchangeRates = storeData.prevExchangeRates;
+  const prevExchangeRates: ExchangeRateType[] = storeData.prevExchangeRates;
 
   return (
     <tr>

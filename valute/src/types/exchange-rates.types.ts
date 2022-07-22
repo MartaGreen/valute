@@ -25,13 +25,25 @@ export type ExchangeRateType = {
 //   [exchangeRateCode: string]: number;
 // };
 
+// export type ExchangeRateStateType = {
+//   currentReqStatus: string; // request: get current exchange rates
+//   prevReqStatus: string; // request: get previous exchange rates
+//   exchangeRates: ExchangeRateType[];
+//   prevExchangeRates: ExchangeRateType[];
+//   prevReqUrl: string;
+//   insertionIndex: number;
+//   activeExchangeRate: string | null;
+//   waitMsg: string;
+// };
+
 export type ExchangeRateStateType = {
-  currentReqStatus: string; // request: get current exchange rates
-  prevReqStatus: string; // request: get previous exchange rates
+  status: string;
   exchangeRates: ExchangeRateType[];
-  prevExchangeRates: ExchangeRateType[];
   prevReqUrl: string;
-  insertionIndex: number;
-  activeExchangeRate: string | null;
-  waitMsg: string;
+};
+
+export type PrevExchangeRateStateType = {
+  status: string;
+  prevExchangeRates: ExchangeRateType[];
+  activeExchangeRate: string; // exchange rate's code to see prev values
 };

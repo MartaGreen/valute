@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./exchangeRate.style";
 import {
   ExchangeRateType,
@@ -7,26 +7,21 @@ import {
 import { calculatePercentOfChange } from "../../api/exchange-rates.request";
 
 import PercentOfChangeIcon from "../percentOfChangeIcon/percentOfChangeIcon";
-import {
-  prevExchangeRatesReducer,
-  openPrevExchangeRates,
-} from "../../redux/slices/exchange-rate.slice";
+import { prevExchangeRatesReducer } from "../../redux/slices/prev-exchange-rates.slice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ExchangeRate({
   exchangeRateData,
-  itemCounter,
 }: {
   exchangeRateData: ExchangeRateType;
-  itemCounter: number;
 }) {
   const classes = styles();
 
-  const storeData = useSelector(
+  const exchangeRatesStore = useSelector(
     (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
-  const prevReqUrl = storeData.prevReqUrl;
-  const activeCharCode = storeData.activeExchangeRate;
+
+  const prevReqUrl = exchangeRatesStore.prevReqUrl;
   const charCode: string = exchangeRateData.CharCode;
   const dispatch = useDispatch();
 
@@ -36,15 +31,8 @@ export default function ExchangeRate({
   );
 
   const showPreviousRates = async () => {
-    if (charCode !== activeCharCode) {
-      dispatch(prevExchangeRatesReducer({ prevReqUrl, charCode }));
-      dispatch(openPrevExchangeRates(charCode));
-    }
+    dispatch(prevExchangeRatesReducer({ prevReqUrl, charCode }));
   };
-
-  useEffect(() => {
-    console.log(storeData);
-  });
 
   return (
     <tr

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./exchangeRates.style";
 import { useDispatch, useSelector } from "react-redux";
-import { exchangeRatesReducer } from "../../redux/slices/exchange-rate.slice";
+import { exchangeRatesReducer } from "../../redux/slices/exchange-rates.slice";
 
 import { REQUEST_STATUS } from "../../constants/request.constants";
 import {
@@ -19,9 +19,9 @@ export default function ExchangeRates() {
   const storeData = useSelector(
     (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
-  const status: string = storeData.currentReqStatus;
+  const status: string = storeData.status;
   const exchangeRates: (ExchangeRateType | null)[] = storeData.exchangeRates;
-  const waitMsg: string = storeData.waitMsg;
+  const waitMsg: string = "Loading ...";
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -52,14 +52,13 @@ export default function ExchangeRates() {
           exchangeRates.map(
             (exchangeRate: ExchangeRateType | null, index: number) => {
               if (!exchangeRate) {
-                return <PrevExchangeRates charCode={charCode} key={index} />;
+                return <PrevExchangeRates charCode={charCode} key={charCode} />;
               }
 
               charCode = exchangeRate.CharCode;
               return (
                 <ExchangeRate
                   exchangeRateData={exchangeRate}
-                  itemCounter={index}
                   key={exchangeRate.ID}
                 />
               );
