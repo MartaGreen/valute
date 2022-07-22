@@ -32,6 +32,6 @@ export type ExchangeRateStateType = {
   prevExchangeRates: ExchangeRateType[];
   prevReqUrl: string;
   insertionIndex: number;
-  // isClosed: boolean;
+  activeExchangeRate: string | null;
   waitMsg: string;
 };

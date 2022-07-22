@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import styles from "./exchangeRatesList.style";
+import React, { useEffect, useState } from "react";
+import styles from "./exchangeRates.style";
 import { useDispatch, useSelector } from "react-redux";
 import { exchangeRatesReducer } from "../../redux/slices/exchange-rate.slice";
 
@@ -8,29 +8,21 @@ import {
   ExchangeRateType,
   ExchangeRateStateType,
 } from "../../types/exchange-rates.types";
-import { insertionByIndex } from "../../shared/arrayFunctions";
 
-import ExchangeRateElement from "../exchangeRateElement/exchangeRateElement";
-import PrevExchangeRatesList from "../prevExchangeRatesList/prevExchangeRatesList";
+import ExchangeRate from "../exchangeRate/exchangeRate";
+import PrevExchangeRates from "../prevExchangeRates/prevExchangeRates";
 
-export default function ExhangeRatesList() {
+export default function ExchangeRates() {
   const classes = styles();
+  let charCode = "";
 
   const storeData = useSelector(
     (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
   const status: string = storeData.currentReqStatus;
-  const exchangeRatesData: ExchangeRateType[] = storeData.exchangeRates;
-  const insertionIndex: number = storeData.insertionIndex;
+  const exchangeRates: (ExchangeRateType | null)[] = storeData.exchangeRates;
   const waitMsg: string = storeData.waitMsg;
   const dispatch = useDispatch();
-
-  // insert empty object as a symbol to render previous values
-  const exchangeRates: ExchangeRateType[] = insertionByIndex(
-    exchangeRatesData,
-    [{} as ExchangeRateType],
-    insertionIndex
-  );
 
   useEffect(() => {
     dispatch(exchangeRatesReducer());
@@ -47,27 +39,32 @@ export default function ExhangeRatesList() {
           </th>
         </tr>
       </thead>
+
       <tbody>
-        {status === REQUEST_STATUS.success ? (
-          exchangeRates.map((exchangeRate: ExchangeRateType, index: number) => {
-            if (!Object.keys(exchangeRate).length)
-              return <PrevExchangeRatesList key={`exch_rate-${index}`} />;
-            else
-              return (
-                <ExchangeRateElement
-                  exchangeRateData={exchangeRate}
-                  itemCounter={index}
-                  key={`exch_rate-${index}`}
-                />
-              );
-          })
-        ) : (
+        {status === REQUEST_STATUS.pending && (
           <tr>
             <td colSpan={3} style={{ textAlign: "center" }}>
               {waitMsg}
             </td>
           </tr>
         )}
+        {status === REQUEST_STATUS.success &&
+          exchangeRates.map(
+            (exchangeRate: ExchangeRateType | null, index: number) => {
+              if (!exchangeRate) {
+                return <PrevExchangeRates charCode={charCode} key={index} />;
+              }
+
+              charCode = exchangeRate.CharCode;
+              return (
+                <ExchangeRate
+                  exchangeRateData={exchangeRate}
+                  itemCounter={index}
+                  key={exchangeRate.ID}
+                />
+              );
+            }
+          )}
       </tbody>
     </table>
   );

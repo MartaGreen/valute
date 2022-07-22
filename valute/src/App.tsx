@@ -1,11 +1,11 @@
 import React from "react";
 
-import ExhangeRatesList from "./components/exchangeRatesList/exchangeRatesList";
+import ExchangeRates from "./components/exchangeRates/exchangeRates";
 
 function App() {
   return (
     <div>
-      <ExhangeRatesList />
+      <ExchangeRates />
     </div>
   );
 }

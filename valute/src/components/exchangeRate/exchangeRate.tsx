@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./exchangeRateElement.style";
+import styles from "./exchangeRate.style";
 import {
   ExchangeRateType,
   ExchangeRateStateType,
@@ -9,11 +9,11 @@ import { calculatePercentOfChange } from "../../api/exchange-rates.request";
 import PercentOfChangeIcon from "../percentOfChangeIcon/percentOfChangeIcon";
 import {
   prevExchangeRatesReducer,
-  setInsertionIndex,
+  openPrevExchangeRates,
 } from "../../redux/slices/exchange-rate.slice";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function ExchangeRateElement({
+export default function ExchangeRate({
   exchangeRateData,
   itemCounter,
 }: {
@@ -28,6 +28,7 @@ export default function ExchangeRateElement({
   const prevReqUrl = storeData.prevReqUrl;
   const exchangeRatesData: ExchangeRateType[] = storeData.exchangeRates;
   const insertionIndex: number = storeData.insertionIndex;
+  const charCode: string = exchangeRateData.CharCode;
   const dispatch = useDispatch();
 
   const percentOfChange: number = calculatePercentOfChange(
@@ -36,19 +37,20 @@ export default function ExchangeRateElement({
   );
 
   const showPreviousRates = async () => {
-    const index: number = exchangeRatesData.indexOf(exchangeRateData);
-    dispatch(setInsertionIndex(index));
+    // const index: number = exchangeRatesData.indexOf(exchangeRateData);
+    console.log("show");
+    dispatch(openPrevExchangeRates(charCode));
 
-    if (index + 1 !== insertionIndex) {
-      dispatch(
-        prevExchangeRatesReducer({
-          prevReqUrl,
-          charCode: exchangeRateData.CharCode,
-        })
-      );
+    // if (index + 1 !== insertionIndex) {
+    // dispatch(
+    //   prevExchangeRatesReducer({
+    //     prevReqUrl,
+    //     charCode: exchangeRateData.CharCode,
+    //   })
+    // );
 
-      // dispatch(setInsertionIndex(index));
-    }
+    // dispatch(setInsertionIndex(index));
+    // }
     // } else {
     //   dispatch(setInsertionIndex(NaN));
     // }

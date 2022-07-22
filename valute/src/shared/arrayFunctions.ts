@@ -4,10 +4,12 @@ import {
 } from "../types/exchange-rates.types";
 
 export function ObjectToArray(obj: ExchangeRatesType) {
-  const exchangeRatesNames: string[] = Object.keys(obj);
-  const exchangeRatesArray: ExchangeRateType[] = exchangeRatesNames.map(
-    (exchangeRateName) => obj[exchangeRateName]
-  );
+  const exchangeRatesCodes: string[] = Object.keys(obj);
+  const exchangeRatesArray: (ExchangeRateType | null)[] = [];
+  exchangeRatesCodes.forEach((exchangeRatesCode) => {
+    exchangeRatesArray.push(obj[exchangeRatesCode]);
+    exchangeRatesArray.push(null);
+  });
   return exchangeRatesArray;
 }
 

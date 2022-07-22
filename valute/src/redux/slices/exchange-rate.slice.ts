@@ -58,19 +58,15 @@ export const exchangeRatesSlice = createSlice({
     currentReqStatus: "empty",
     prevReqStatus: "empty",
     prevReqUrl: "",
-    exchangeRates: [] as ExchangeRateType[],
+    exchangeRates: [] as (ExchangeRateType | null)[],
     prevExchangeRates: [] as ExchangeRateType[],
     insertionIndex: NaN,
-    isClosed: false,
+    activeExchangeRate: null, // opened prev exchange rates
     waitMsg: "",
   },
   reducers: {
-    setInsertionIndex: (state, action) => {
-      if (state.insertionIndex !== action.payload + 1) {
-        state.insertionIndex = action.payload + 1;
-      } else {
-        state.insertionIndex = NaN;
-      }
+    openPrevExchangeRates: (state, action) => {
+      state.activeExchangeRate = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -83,7 +79,7 @@ export const exchangeRatesSlice = createSlice({
       state.exchangeRates = ObjectToArray(action.payload.Valute);
       state.prevReqUrl = action.payload.PreviousURL;
     });
-    builder.addCase(exchangeRatesReducer.rejected, (state, action) => {
+    builder.addCase(exchangeRatesReducer.rejected, (state) => {
       state.currentReqStatus = REQUEST_STATUS.error;
       state.waitMsg = REQUEST_MSGS.error;
     });
@@ -96,12 +92,12 @@ export const exchangeRatesSlice = createSlice({
       state.prevReqStatus = REQUEST_STATUS.success;
       state.prevExchangeRates = action.payload;
     });
-    builder.addCase(prevExchangeRatesReducer.rejected, (state, action) => {
+    builder.addCase(prevExchangeRatesReducer.rejected, (state) => {
       state.prevReqStatus = REQUEST_STATUS.error;
       state.waitMsg = REQUEST_MSGS.error;
     });
   },
 });
 
-export const { setInsertionIndex } = exchangeRatesSlice.actions;
+export const { openPrevExchangeRates } = exchangeRatesSlice.actions;
 export default exchangeRatesSlice.reducer;
