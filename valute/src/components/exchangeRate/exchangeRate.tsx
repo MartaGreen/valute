@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./exchangeRate.style";
 import {
   ExchangeRateType,
@@ -26,8 +26,7 @@ export default function ExchangeRate({
     (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
   const prevReqUrl = storeData.prevReqUrl;
-  const exchangeRatesData: ExchangeRateType[] = storeData.exchangeRates;
-  const insertionIndex: number = storeData.insertionIndex;
+  const activeCharCode = storeData.activeExchangeRate;
   const charCode: string = exchangeRateData.CharCode;
   const dispatch = useDispatch();
 
@@ -37,33 +36,20 @@ export default function ExchangeRate({
   );
 
   const showPreviousRates = async () => {
-    // const index: number = exchangeRatesData.indexOf(exchangeRateData);
-    console.log("show");
-    dispatch(openPrevExchangeRates(charCode));
-
-    // if (index + 1 !== insertionIndex) {
-    // dispatch(
-    //   prevExchangeRatesReducer({
-    //     prevReqUrl,
-    //     charCode: exchangeRateData.CharCode,
-    //   })
-    // );
-
-    // dispatch(setInsertionIndex(index));
-    // }
-    // } else {
-    //   dispatch(setInsertionIndex(NaN));
-    // }
+    if (charCode !== activeCharCode) {
+      dispatch(prevExchangeRatesReducer({ prevReqUrl, charCode }));
+      dispatch(openPrevExchangeRates(charCode));
+    }
   };
+
+  useEffect(() => {
+    console.log(storeData);
+  });
 
   return (
     <tr
       title={exchangeRateData.Name}
-      className={`${classes.exchangeRateElement} ${
-        itemCounter % 2 !== 0 ? classes.grayBg : ""
-      } ${
-        exchangeRateData.isPrevious ? classes.exchangeRateElement_previous : ""
-      }`}
+      className={`${classes.exchangeRateElement}`}
       onClick={async () => showPreviousRates()}
     >
       <td
