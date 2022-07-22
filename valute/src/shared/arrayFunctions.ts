@@ -1,24 +1,24 @@
 import {
-  IExchangeRate,
-  IExchangeRateData,
-} from "../interfaces/exchangeRatesInterfaces";
+  ExchangeRatesType,
+  ExchangeRateType,
+} from "../types/exchange-rates.types";
 
-export function ObjectToArray(obj: IExchangeRate) {
+export function ObjectToArray(obj: ExchangeRatesType) {
   const exchangeRatesNames: string[] = Object.keys(obj);
-  const exchangeRatesArray: IExchangeRateData[] = exchangeRatesNames.map(
+  const exchangeRatesArray: ExchangeRateType[] = exchangeRatesNames.map(
     (exchangeRateName) => obj[exchangeRateName]
   );
   return exchangeRatesArray;
 }
 
 export function insertionByIndex(
-  array: IExchangeRateData[],
-  insertion: IExchangeRateData[],
+  array: ExchangeRateType[],
+  insertion: ExchangeRateType[],
   index: number
 ) {
   if (index) {
-    const arrayStart: IExchangeRateData[] = array.slice(0, index);
-    const arrayEnd: IExchangeRateData[] = array.slice(index);
+    const arrayStart: ExchangeRateType[] = array.slice(0, index);
+    const arrayEnd: ExchangeRateType[] = array.slice(index);
     return [...arrayStart, ...insertion, ...arrayEnd];
   } else {
     return array;

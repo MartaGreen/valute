@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import styles from "./exchangeRatesList.style";
 import { useDispatch, useSelector } from "react-redux";
-import { exchangeRatesRequest } from "../../redux/slices/exchangeRatesSlice";
+import { exchangeRatesReducer } from "../../redux/slices/exchange-rate.slice";
 
-import { REQUEST_STATUS } from "../../constants/requestsConstants";
+import { REQUEST_STATUS } from "../../constants/request.constants";
 import {
-  IExchangeRateData,
-  IExchangeRatesStore,
-} from "../../interfaces/exchangeRatesInterfaces";
+  ExchangeRateType,
+  ExchangeRateStateType,
+} from "../../types/exchange-rates.types";
 import { insertionByIndex } from "../../shared/arrayFunctions";
 
 import ExchangeRateElement from "../exchangeRateElement/exchangeRateElement";
@@ -17,23 +17,23 @@ export default function ExhangeRatesList() {
   const classes = styles();
 
   const storeData = useSelector(
-    (state: { exchangeRates: IExchangeRatesStore }) => state.exchangeRates
+    (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
-  const status: string = storeData.status;
-  const exchangeRatesData: IExchangeRateData[] = storeData.exchangeRatesData;
+  const status: string = storeData.currentReqStatus;
+  const exchangeRatesData: ExchangeRateType[] = storeData.exchangeRates;
   const insertionIndex: number = storeData.insertionIndex;
   const waitMsg: string = storeData.waitMsg;
   const dispatch = useDispatch();
 
   // insert empty object as a symbol to render previous values
-  const exchangeRates: IExchangeRateData[] = insertionByIndex(
+  const exchangeRates: ExchangeRateType[] = insertionByIndex(
     exchangeRatesData,
-    [{} as IExchangeRateData],
+    [{} as ExchangeRateType],
     insertionIndex
   );
 
   useEffect(() => {
-    dispatch(exchangeRatesRequest());
+    dispatch(exchangeRatesReducer());
   }, []);
 
   return (
@@ -49,20 +49,18 @@ export default function ExhangeRatesList() {
       </thead>
       <tbody>
         {status === REQUEST_STATUS.success ? (
-          exchangeRates.map(
-            (exchangeRate: IExchangeRateData, index: number) => {
-              if (!Object.keys(exchangeRate).length)
-                return <PrevExchangeRatesList key={`exch_rate-${index}`} />;
-              else
-                return (
-                  <ExchangeRateElement
-                    exchangeRateData={exchangeRate}
-                    itemCounter={index}
-                    key={`exch_rate-${index}`}
-                  />
-                );
-            }
-          )
+          exchangeRates.map((exchangeRate: ExchangeRateType, index: number) => {
+            if (!Object.keys(exchangeRate).length)
+              return <PrevExchangeRatesList key={`exch_rate-${index}`} />;
+            else
+              return (
+                <ExchangeRateElement
+                  exchangeRateData={exchangeRate}
+                  itemCounter={index}
+                  key={`exch_rate-${index}`}
+                />
+              );
+          })
         ) : (
           <tr>
             <td colSpan={3} style={{ textAlign: "center" }}>

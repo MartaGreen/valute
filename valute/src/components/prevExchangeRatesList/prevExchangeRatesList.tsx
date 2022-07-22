@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import {
-  IExchangeRateData,
-  IExchangeRatesStore,
-} from "../../interfaces/exchangeRatesInterfaces";
+  ExchangeRateType,
+  ExchangeRateStateType,
+} from "../../types/exchange-rates.types";
 import styles from "./prevExchangeRateList.style";
-import { REQUEST_STATUS } from "../../constants/requestsConstants";
+import { REQUEST_STATUS } from "../../constants/request.constants";
 
 import PrevExchangeRateElement from "../prevExchangeRateElement/prevExchangeRateElement";
 
@@ -13,10 +13,10 @@ export default function PrevExchangeRatesList() {
   const classes = styles();
 
   const storeData = useSelector(
-    (state: { exchangeRates: IExchangeRatesStore }) => state.exchangeRates
+    (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
-  const prevExchangeRatesList = storeData.countOfPreviousRates;
-  const status = storeData.prevRatesStatus;
+  const prevExchangeRatesList = storeData.prevExchangeRates;
+  const status = storeData.prevReqStatus;
   const waitMsg: string = storeData.waitMsg;
 
   return (
@@ -33,7 +33,7 @@ export default function PrevExchangeRatesList() {
             </thead>
             <tbody>
               {prevExchangeRatesList.map(
-                (prevElem: IExchangeRateData, index: number) => (
+                (prevElem: ExchangeRateType, index: number) => (
                   <PrevExchangeRateElement
                     prevExchangeRate={prevElem}
                     key={`prevExchRate-${index}`}

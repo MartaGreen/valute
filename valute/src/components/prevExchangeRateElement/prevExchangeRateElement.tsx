@@ -1,13 +1,13 @@
 import React from "react";
-import { IExchangeRateData } from "../../interfaces/exchangeRatesInterfaces";
-import { calculatePercentOfChange } from "../../serverData/exchangeRatesDataRequest";
+import { ExchangeRateType } from "../../types/exchange-rates.types";
+import { calculatePercentOfChange } from "../../api/exchange-rates.request";
 import PercentOfChangeIcon from "../percentOfChangeIcon/percentOfChangeIcon";
 import styles from "./prevExchangeRateElement.style";
 
 export default function PrevExchangeRateElement({
   prevExchangeRate,
 }: {
-  prevExchangeRate: IExchangeRateData;
+  prevExchangeRate: ExchangeRateType;
 }) {
   const classes = styles();
 

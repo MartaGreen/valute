@@ -1,32 +1,32 @@
 import React from "react";
 import styles from "./exchangeRateElement.style";
 import {
-  IExchangeRateData,
-  IExchangeRatesStore,
-} from "../../interfaces/exchangeRatesInterfaces";
-import { calculatePercentOfChange } from "../../serverData/exchangeRatesDataRequest";
+  ExchangeRateType,
+  ExchangeRateStateType,
+} from "../../types/exchange-rates.types";
+import { calculatePercentOfChange } from "../../api/exchange-rates.request";
 
 import PercentOfChangeIcon from "../percentOfChangeIcon/percentOfChangeIcon";
 import {
-  getPreviousRatesRequest,
+  prevExchangeRatesReducer,
   setInsertionIndex,
-} from "../../redux/slices/exchangeRatesSlice";
+} from "../../redux/slices/exchange-rate.slice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ExchangeRateElement({
   exchangeRateData,
   itemCounter,
 }: {
-  exchangeRateData: IExchangeRateData;
+  exchangeRateData: ExchangeRateType;
   itemCounter: number;
 }) {
   const classes = styles();
 
   const storeData = useSelector(
-    (state: { exchangeRates: IExchangeRatesStore }) => state.exchangeRates
+    (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
-  const previousUrl = storeData.previousUrl;
-  const exchangeRatesData: IExchangeRateData[] = storeData.exchangeRatesData;
+  const prevReqUrl = storeData.prevReqUrl;
+  const exchangeRatesData: ExchangeRateType[] = storeData.exchangeRates;
   const insertionIndex: number = storeData.insertionIndex;
   const dispatch = useDispatch();
 
@@ -41,8 +41,8 @@ export default function ExchangeRateElement({
 
     if (index + 1 !== insertionIndex) {
       dispatch(
-        getPreviousRatesRequest({
-          previousUrl,
+        prevExchangeRatesReducer({
+          prevReqUrl,
           charCode: exchangeRateData.CharCode,
         })
       );
