@@ -5,7 +5,10 @@ import {
   ExchangeRateStateType,
 } from "../../types/exchange-rates.types";
 import { calculatePercentOfChange } from "../../shared/calculations";
-import { prevExchangeRatesReducer } from "../../redux/slices/prev-exchange-rates.slice";
+import {
+  prevExchangeRatesReducer,
+  updateActiveExchangeRate,
+} from "../../redux/slices/prev-exchange-rates.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { EXCHANGE_RATE_CHANGE_COLOR } from "../../constants/exchange-rates.constants";
 
@@ -30,6 +33,7 @@ export default function ExchangeRate({
   );
 
   const showPreviousRates = async () => {
+    dispatch(updateActiveExchangeRate(charCode));
     dispatch(prevExchangeRatesReducer({ prevReqUrl, charCode }));
   };
 

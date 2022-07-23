@@ -26,7 +26,7 @@ export const prevExchangeRatesReducer = createAsyncThunk(
 
     if (!prevExchangeRates)
       return rejectWithValue("Server error! Could not get previous rates");
-    return { prevExchangeRates, charCode };
+    return prevExchangeRates;
   }
 );
 
@@ -37,15 +37,18 @@ const prevExchangeRatesSlice = createSlice({
     prevExchangeRates: [] as ExchangeRateType[],
     activeExchangeRate: "",
   },
-  reducers: {},
+  reducers: {
+    updateActiveExchangeRate: (state, action) => {
+      state.activeExchangeRate = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(prevExchangeRatesReducer.pending, (state) => {
       state.status = REQUEST_STATUS.pending;
     });
     builder.addCase(prevExchangeRatesReducer.fulfilled, (state, action) => {
       state.status = REQUEST_STATUS.success;
-      state.prevExchangeRates = action.payload.prevExchangeRates;
-      state.activeExchangeRate = action.payload.charCode;
+      state.prevExchangeRates = action.payload;
     });
     builder.addCase(prevExchangeRatesReducer.rejected, (state) => {
       state.status = REQUEST_STATUS.error;
@@ -53,4 +56,5 @@ const prevExchangeRatesSlice = createSlice({
   },
 });
 
+export const { updateActiveExchangeRate } = prevExchangeRatesSlice.actions;
 export default prevExchangeRatesSlice.reducer;

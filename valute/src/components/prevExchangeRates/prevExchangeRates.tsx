@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./prevExchangeRates.style";
 import { useSelector } from "react-redux";
 import { PrevExchangeRateStateType } from "../../types/exchange-rates.types";
@@ -19,8 +19,6 @@ function PrevExchangeRates({ charCode }: { charCode: string }) {
   const prevExchangeRates: ExchangeRateType[] = storeData.prevExchangeRates;
   const status: string = storeData.status;
   // const status = REQUEST_STATUS.pending;
-
-  console.log(prevExchangeRates);
 
   return (
     <tr>

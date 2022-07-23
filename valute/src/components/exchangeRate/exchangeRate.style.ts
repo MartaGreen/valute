@@ -39,6 +39,12 @@ const styles = createUseStyles({
 
   exchangeRateTable__change: {},
 
+  "@media screen and (max-width: 1024px)": {
+    exchangeRateTable__showBtn: {
+      opacity: "100%",
+    },
+  },
+
   "@media screen and (max-width: 550px)": {
     exchangeRateTable__showBtn: {
       right: 15,
