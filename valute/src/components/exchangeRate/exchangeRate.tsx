@@ -4,11 +4,10 @@ import {
   ExchangeRateType,
   ExchangeRateStateType,
 } from "../../types/exchange-rates.types";
-import { calculatePercentOfChange } from "../../api/exchange-rates.request";
-
-import PercentOfChangeIcon from "../percentOfChangeIcon/percentOfChangeIcon";
+import { calculatePercentOfChange } from "../../shared/calculations";
 import { prevExchangeRatesReducer } from "../../redux/slices/prev-exchange-rates.slice";
 import { useDispatch, useSelector } from "react-redux";
+import { EXCHANGE_RATE_CHANGE_COLOR } from "../../constants/exchange-rates.constants";
 
 export default function ExchangeRate({
   exchangeRateData,
@@ -42,7 +41,13 @@ export default function ExchangeRate({
       <td className={classes.exchangeRate__column}>{exchangeRateData.Value}</td>
       <td
         className={`${classes.exchangeRate__column} ${classes.exchangeRate__percOfChange}`}
-        style={{ color: `${percentOfChange > 0 ? "green" : "red"}` }}
+        style={{
+          color: `${
+            percentOfChange > 0
+              ? EXCHANGE_RATE_CHANGE_COLOR.increase
+              : EXCHANGE_RATE_CHANGE_COLOR.decrease
+          }`,
+        }}
       >
         {percentOfChange}
 

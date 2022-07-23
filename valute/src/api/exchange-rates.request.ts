@@ -18,15 +18,6 @@ export async function getExchangeRates(requestURL: string) {
   }
 }
 
-export function calculatePercentOfChange(
-  newValue: number,
-  previousValue: number
-) {
-  const percent: number = ((newValue - previousValue) / previousValue) * 100;
-  const fixedPercent: number = Number(percent.toFixed(2));
-  return fixedPercent;
-}
-
 /*
   prevRatesCount: amount of previous rates
   prevRequestURL: previous exchange rate request url

@@ -1,34 +1,44 @@
 import React from "react";
+import styles from "./prevExchangeRates.style";
 import { useSelector } from "react-redux";
 import { PrevExchangeRateStateType } from "../../types/exchange-rates.types";
 import { ExchangeRateType } from "../../types/exchange-rates.types";
 
 import PrevExchangeRate from "../prevExchangeRate/prevExchangeRate";
+import Loading from "../loading/loading";
+import { REQUEST_STATUS } from "../../constants/request.constants";
 
 function PrevExchangeRates({ charCode }: { charCode: string }) {
+  const classes = styles();
+
   const storeData = useSelector(
     (state: { prevExchangeRates: PrevExchangeRateStateType }) =>
       state.prevExchangeRates
   );
   const activeCharCode: string | null = storeData.activeExchangeRate;
   const prevExchangeRates: ExchangeRateType[] = storeData.prevExchangeRates;
+  const status: string = storeData.status;
+  // const status = REQUEST_STATUS.pending;
+
+  console.log(prevExchangeRates);
 
   return (
     <tr>
-      <td colSpan={3}>
+      <td colSpan={3} className={classes.prevRatesContainer}>
         {activeCharCode === charCode && (
-          <table>
+          <table className={classes.prevRatesTable}>
             <thead>
               <tr>
-                <th colSpan={3}>
-                  <h3>Курс валюты за прошлые дни</h3>
-                </th>
+                <th colSpan={3}>Курс валюты за прошлые дни</th>
               </tr>
             </thead>
             <tbody>
-              {prevExchangeRates.map((data: ExchangeRateType) => (
-                <PrevExchangeRate data={data} />
-              ))}
+              <Loading status={status} />
+
+              {status === REQUEST_STATUS.success &&
+                prevExchangeRates.map((prevExchangeRate: ExchangeRateType) => (
+                  <PrevExchangeRate prevExchangeRateData={prevExchangeRate} />
+                ))}
             </tbody>
           </table>
         )}

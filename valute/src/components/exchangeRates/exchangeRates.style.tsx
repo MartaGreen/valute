@@ -17,8 +17,9 @@ const styles = createUseStyles({
     background: "#e2e3e0",
   },
 
-  exchangeRatesTable__item: {
-    padding: 30,
+  exchangeRatesTable__th: {
+    padding: "30px 0",
+    width: "33.33%",
   },
 
   loadingList: {
@@ -27,7 +28,9 @@ const styles = createUseStyles({
   },
 
   "@media (max-width: 400px)": {
-    exchangeRateList__item: { padding: "30px 10px" },
+    exchangeRatesTable: {
+      fontSize: 13,
+    },
   },
 });
 
