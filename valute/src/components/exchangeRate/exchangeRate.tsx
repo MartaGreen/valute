@@ -14,8 +14,10 @@ import { EXCHANGE_RATE_CHANGE_COLOR } from "../../constants/exchange-rates.const
 
 export default function ExchangeRate({
   exchangeRateData,
+  isGrayBg,
 }: {
   exchangeRateData: ExchangeRateType;
+  isGrayBg: boolean;
 }) {
   const classes = styles();
 
@@ -41,6 +43,7 @@ export default function ExchangeRate({
     <tr
       className={`${classes.exchangeRateTable__tr}`}
       title={exchangeRateData.Name}
+      style={{ background: `${isGrayBg && "#ebebeb"}` }}
     >
       <td className={classes.exchangeRateTable__td}>
         {`${exchangeRateData.NumCode} ${exchangeRateData.CharCode}`}

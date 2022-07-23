@@ -45,19 +45,23 @@ export default function ExchangeRates() {
         <Loading status={status} />
 
         {status === REQUEST_STATUS.success &&
-          exchangeRates.map((exchangeRate: ExchangeRateType | null) => {
-            if (!exchangeRate) {
-              return <PrevExchangeRates charCode={charCode} key={charCode} />;
-            }
+          exchangeRates.map(
+            (exchangeRate: ExchangeRateType | null, index: number) => {
+              if (!exchangeRate) {
+                return <PrevExchangeRates charCode={charCode} key={charCode} />;
+              }
 
-            charCode = exchangeRate.CharCode;
-            return (
-              <ExchangeRate
-                exchangeRateData={exchangeRate}
-                key={exchangeRate.ID}
-              />
-            );
-          })}
+              console.log(index);
+              charCode = exchangeRate.CharCode;
+              return (
+                <ExchangeRate
+                  exchangeRateData={exchangeRate}
+                  key={exchangeRate.ID}
+                  isGrayBg={index % 4 !== 0}
+                />
+              );
+            }
+          )}
       </tbody>
     </table>
   );
