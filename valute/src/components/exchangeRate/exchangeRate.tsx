@@ -34,13 +34,18 @@ export default function ExchangeRate({
   };
 
   return (
-    <tr title={exchangeRateData.Name} className={`${classes.exchangeRate}`}>
+    <tr
+      className={`${classes.exchangeRateTable__tr}`}
+      title={exchangeRateData.Name}
+    >
+      <td className={classes.exchangeRateTable__td}>
+        {`${exchangeRateData.NumCode} ${exchangeRateData.CharCode}`}
+      </td>
+      <td className={classes.exchangeRateTable__td}>
+        {exchangeRateData.Value}
+      </td>
       <td
-        className={classes.exchangeRate__column}
-      >{`${exchangeRateData.NumCode} ${exchangeRateData.CharCode}`}</td>
-      <td className={classes.exchangeRate__column}>{exchangeRateData.Value}</td>
-      <td
-        className={`${classes.exchangeRate__column} ${classes.exchangeRate__percOfChange}`}
+        className={`${classes.exchangeRateTable__td} ${classes.exchangeRateTable__change}`}
         style={{
           color: `${
             percentOfChange > 0
@@ -52,7 +57,7 @@ export default function ExchangeRate({
         {percentOfChange}
 
         <button
-          className={classes.exchangeRate__btn}
+          className={classes.exchangeRateTable__showBtn}
           onClick={async () => showPreviousRates()}
         ></button>
       </td>

@@ -22,11 +22,6 @@ const styles = createUseStyles({
     width: "33.33%",
   },
 
-  loadingList: {
-    textAlign: "center",
-    verticalAlign: "center",
-  },
-
   "@media (max-width: 400px)": {
     exchangeRatesTable: {
       fontSize: 13,

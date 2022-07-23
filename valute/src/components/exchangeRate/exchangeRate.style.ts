@@ -1,29 +1,22 @@
 import { createUseStyles } from "react-jss";
 
 const styles = createUseStyles({
-  exchangeRate: {
+  exchangeRateTable__tr: {
     position: "relative",
 
-    "&:hover $exchangeRate__btn": {
-      // background: "#fef8d1",
+    "&:hover $exchangeRateTable__showBtn": {
       opacity: "100%",
     },
   },
 
-  exchangeRate_previous: {
-    background: "#FFE7BA",
-
-    "& > :first-child": {},
-  },
-
-  exchangeRate__column: {
+  exchangeRateTable__td: {
     position: "relative",
     textAlign: "center",
 
     padding: 20,
   },
 
-  exchangeRate__btn: {
+  exchangeRateTable__showBtn: {
     position: "absolute",
     right: 30,
     top: "35%",
@@ -40,18 +33,23 @@ const styles = createUseStyles({
     transition: ".4s",
 
     background: "none",
-    ourline: "none",
+    outline: "none",
     cursor: "pointer",
   },
 
-  exchangeRate__percOfChange: {
-    // display: "flex",
-    // justifyContent: "center",
-    // alignItems: "center",
-  },
+  exchangeRateTable__change: {},
 
-  "@media (max-width: 400px)": {
-    exchangeRate__column: { padding: "30px 5px" },
+  "@media screen and (max-width: 550px)": {
+    exchangeRateTable__showBtn: {
+      right: 15,
+      top: "38%",
+
+      width: 10,
+      height: 10,
+
+      borderBottom: "2px solid gray",
+      borderRight: "2px solid gray",
+    },
   },
 });
 
