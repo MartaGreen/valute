@@ -7,6 +7,7 @@ const styles = createUseStyles({
   },
   title: {
     textAlign: "center",
+    margin: "30px 0",
   },
 });
 

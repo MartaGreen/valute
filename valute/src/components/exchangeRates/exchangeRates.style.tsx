@@ -2,9 +2,9 @@ import { createUseStyles } from "react-jss";
 
 const styles = createUseStyles({
   exchangeRatesTable: {
-    width: "80%",
-    minWidth: 300,
-    maxWidth: 1000,
+    width: "90%",
+    minWidth: 310,
+    maxWidth: 950,
 
     margin: "30px auto",
     borderCollapse: "collapse",
@@ -24,7 +24,7 @@ const styles = createUseStyles({
 
   "@media (max-width: 400px)": {
     exchangeRatesTable: {
-      fontSize: 13,
+      fontSize: 15,
     },
   },
 });
