@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./exchangeRate.style";
 import {
   ExchangeRateType,
@@ -34,9 +34,19 @@ export default function ExchangeRate({
     exchangeRateData.Previous
   );
 
+  const exchangeRateElement: React.MutableRefObject<HTMLTableRowElement | null> =
+    useRef(null);
   const showPreviousRates = async () => {
     dispatch(updateActiveExchangeRate(charCode));
     dispatch(prevExchangeRatesReducer({ prevReqUrl, charCode }));
+
+    setTimeout(
+      () =>
+        (exchangeRateElement.current as HTMLTableRowElement).scrollIntoView({
+          behavior: "smooth",
+        }),
+      0
+    );
   };
 
   return (
@@ -44,6 +54,7 @@ export default function ExchangeRate({
       className={`${classes.exchangeRateTable__tr}`}
       title={exchangeRateData.Name}
       style={{ background: `${isGrayBg && "#ebebeb"}` }}
+      ref={exchangeRateElement}
     >
       <td className={classes.exchangeRateTable__td}>
         {`${exchangeRateData.NumCode} ${exchangeRateData.CharCode}`}
