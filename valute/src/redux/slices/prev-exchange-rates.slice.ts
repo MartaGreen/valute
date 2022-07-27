@@ -21,6 +21,8 @@ export const prevExchangeRatesReducer = createAsyncThunk(
     //   return rejectWithValue("Server error! Could not get previous rates");
     // }
 
+    console.log("prev exchange rates request");
+
     const prevExchangeRates: ExchangeRateType[] | null =
       await getPrevExchangeRates(COUNT_OF_PREVIOUS_RATES, prevReqUrl, charCode);
 
@@ -36,14 +38,21 @@ const prevExchangeRatesSlice = createSlice({
     status: "empty",
     prevExchangeRates: [] as ExchangeRateType[],
     activeExchangeRate: "",
+    isHidden: false,
   },
   reducers: {
     updateActiveExchangeRate: (state, action) => {
       state.activeExchangeRate = action.payload;
     },
+
+    resetPrevRates: (state) => {
+      state.prevExchangeRates = [];
+      state.isHidden = true;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(prevExchangeRatesReducer.pending, (state) => {
+      state.isHidden = false;
       state.status = REQUEST_STATUS.pending;
     });
     builder.addCase(prevExchangeRatesReducer.fulfilled, (state, action) => {
@@ -56,5 +65,6 @@ const prevExchangeRatesSlice = createSlice({
   },
 });
 
-export const { updateActiveExchangeRate } = prevExchangeRatesSlice.actions;
+export const { updateActiveExchangeRate, resetPrevRates } =
+  prevExchangeRatesSlice.actions;
 export default prevExchangeRatesSlice.reducer;

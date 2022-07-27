@@ -21,21 +21,6 @@ export type ExchangeRateType = {
   isPrevious: boolean;
 };
 
-// export type IPercentOfChangeObj = {
-//   [exchangeRateCode: string]: number;
-// };
-
-// export type ExchangeRateStateType = {
-//   currentReqStatus: string; // request: get current exchange rates
-//   prevReqStatus: string; // request: get previous exchange rates
-//   exchangeRates: ExchangeRateType[];
-//   prevExchangeRates: ExchangeRateType[];
-//   prevReqUrl: string;
-//   insertionIndex: number;
-//   activeExchangeRate: string | null;
-//   waitMsg: string;
-// };
-
 export type ExchangeRateStateType = {
   status: string;
   exchangeRates: ExchangeRateType[];
@@ -46,4 +31,5 @@ export type PrevExchangeRateStateType = {
   status: string;
   prevExchangeRates: ExchangeRateType[];
   activeExchangeRate: string; // exchange rate's code to see prev values
+  isHidden: boolean;
 };

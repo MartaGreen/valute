@@ -51,7 +51,6 @@ export default function ExchangeRates() {
                 return <PrevExchangeRates charCode={charCode} key={charCode} />;
               }
 
-              console.log(index);
               charCode = exchangeRate.CharCode;
               return (
                 <ExchangeRate

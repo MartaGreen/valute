@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./exchangeRate.style";
 import {
   ExchangeRateType,
@@ -7,6 +7,7 @@ import {
 import { calculatePercentOfChange } from "../../shared/calculations";
 import {
   prevExchangeRatesReducer,
+  resetPrevRates,
   updateActiveExchangeRate,
 } from "../../redux/slices/prev-exchange-rates.slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,13 +20,13 @@ export default function ExchangeRate({
   exchangeRateData: ExchangeRateType;
   isGrayBg: boolean;
 }) {
+  const [isOpened, setIsOpened] = useState(false);
   const classes = styles();
 
-  const exchangeRatesStore = useSelector(
+  const dataStore = useSelector(
     (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
-
-  const prevReqUrl = exchangeRatesStore.prevReqUrl;
+  const prevReqUrl = dataStore.prevReqUrl;
   const charCode: string = exchangeRateData.CharCode;
   const dispatch = useDispatch();
 
@@ -37,6 +38,12 @@ export default function ExchangeRate({
   const exchangeRateElement: React.MutableRefObject<HTMLTableRowElement | null> =
     useRef(null);
   const showPreviousRates = async () => {
+    if (isOpened) {
+      dispatch(resetPrevRates());
+      setIsOpened(false);
+      return;
+    }
+
     dispatch(updateActiveExchangeRate(charCode));
     dispatch(prevExchangeRatesReducer({ prevReqUrl, charCode }));
 
@@ -47,6 +54,8 @@ export default function ExchangeRate({
         }),
       0
     );
+
+    setIsOpened(true);
   };
 
   return (

@@ -18,12 +18,13 @@ function PrevExchangeRates({ charCode }: { charCode: string }) {
   const activeCharCode: string | null = storeData.activeExchangeRate;
   const prevExchangeRates: ExchangeRateType[] = storeData.prevExchangeRates;
   const status: string = storeData.status;
+  const isHidden: boolean = storeData.isHidden;
   // const status = REQUEST_STATUS.pending;
 
   return (
     <tr>
       <td colSpan={3} className={classes.prevRatesContainer}>
-        {activeCharCode === charCode && (
+        {activeCharCode === charCode && !isHidden && (
           <table className={classes.prevRatesTable}>
             <thead>
               <tr>
