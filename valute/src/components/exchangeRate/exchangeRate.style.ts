@@ -47,11 +47,21 @@ const styles = createUseStyles({
 
   "@media screen and (max-width: 550px)": {
     exchangeRateTable__showBtn: {
-      right: 15,
-      top: "38%",
+      right: 13,
+      top: "32%",
 
-      width: 10,
-      height: 10,
+      borderBottom: "2px solid gray",
+      borderRight: "2px solid gray",
+    },
+  },
+
+  "@media screen and (max-width: 350px)": {
+    exchangeRateTable__showBtn: {
+      right: 10,
+      top: "34%",
+
+      width: 13,
+      height: 13,
 
       borderBottom: "2px solid gray",
       borderRight: "2px solid gray",
