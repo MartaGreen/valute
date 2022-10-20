@@ -21,7 +21,6 @@ export default function ExchangeRates() {
     (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
   const status: string = storeData.status;
-  // const status = REQUEST_STATUS.pending;
   const exchangeRates: (ExchangeRateType | null)[] = storeData.exchangeRates;
   const dispatch = useDispatch();
 
@@ -33,11 +32,9 @@ export default function ExchangeRates() {
     <table className={classes.exchangeRatesTable}>
       <thead className={classes.exchangeRatesTable__header}>
         <tr>
-          <th className={classes.exchangeRatesTable__th}>Код валюты</th>
-          <th className={classes.exchangeRatesTable__th}>Курс (руб)</th>
-          <th className={classes.exchangeRatesTable__th}>
-            Изменение курса (%)
-          </th>
+          <th className={classes.exchangeRatesTable__th}>Code</th>
+          <th className={classes.exchangeRatesTable__th}>Exchange rate</th>
+          <th className={classes.exchangeRatesTable__th}>Change (%)</th>
         </tr>
       </thead>
 
@@ -48,13 +45,19 @@ export default function ExchangeRates() {
           exchangeRates.map(
             (exchangeRate: ExchangeRateType | null, index: number) => {
               if (!exchangeRate) {
-                return <PrevExchangeRates charCode={charCode} key={charCode} />;
+                return (
+                  <PrevExchangeRates
+                    charCode={charCode}
+                    key={charCode}
+                    name={exchangeRates[index - 1]?.Name}
+                  />
+                );
               }
 
               charCode = exchangeRate.CharCode;
               return (
                 <ExchangeRate
-                  exchangeRateData={exchangeRate}
+                  exchRateData={exchangeRate}
                   key={exchangeRate.ID}
                   isGrayBg={index % 4 !== 0}
                 />

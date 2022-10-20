@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import styles from "./exchangeRate.style";
+
 import {
   ExchangeRateType,
   ExchangeRateStateType,
 } from "../../types/exchange-rates.types";
-import { calculatePercentOfChange } from "../../shared/calculations";
 import {
   prevExchangeRatesReducer,
   resetPrevRates,
@@ -13,12 +13,16 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { EXCHANGE_RATE_CHANGE_COLOR } from "../../constants/exchange-rates.constants";
 
-export default function ExchangeRate({
-  exchangeRateData,
+import WithExchangeRate from "../WithExchangeRate/WithExchangeRate";
+
+function ExchangeRate({
+  exchRateData,
   isGrayBg,
+  percentOfChange,
 }: {
-  exchangeRateData: ExchangeRateType;
+  exchRateData: ExchangeRateType;
   isGrayBg: boolean;
+  percentOfChange: number;
 }) {
   const [isOpened, setIsOpened] = useState(false);
   const classes = styles();
@@ -27,13 +31,8 @@ export default function ExchangeRate({
     (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
   const prevReqUrl = dataStore.prevReqUrl;
-  const charCode: string = exchangeRateData.CharCode;
+  const charCode: string = exchRateData.CharCode;
   const dispatch = useDispatch();
-
-  const percentOfChange: number = calculatePercentOfChange(
-    exchangeRateData.Value,
-    exchangeRateData.Previous
-  );
 
   const exchangeRateElement: React.MutableRefObject<HTMLTableRowElement | null> =
     useRef(null);
@@ -61,16 +60,15 @@ export default function ExchangeRate({
   return (
     <tr
       className={`${classes.exchangeRateTable__tr}`}
-      title={exchangeRateData.Name}
+      title={exchRateData.Name}
       style={{ background: `${isGrayBg && "#ebebeb"}` }}
       ref={exchangeRateElement}
+      id={exchRateData.ID}
     >
       <td className={classes.exchangeRateTable__td}>
-        {`${exchangeRateData.NumCode} ${exchangeRateData.CharCode}`}
+        {`${exchRateData.NumCode} ${exchRateData.CharCode}`}
       </td>
-      <td className={classes.exchangeRateTable__td}>
-        {exchangeRateData.Value}
-      </td>
+      <td className={classes.exchangeRateTable__td}>{exchRateData.Value}</td>
       <td
         className={`${classes.exchangeRateTable__td} ${classes.exchangeRateTable__change}`}
         style={{
@@ -91,3 +89,5 @@ export default function ExchangeRate({
     </tr>
   );
 }
+
+export default WithExchangeRate(ExchangeRate);

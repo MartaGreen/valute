@@ -2,13 +2,17 @@ import React from "react";
 import styles from "./App.style";
 
 import ExchangeRates from "./components/exchangeRates/exchangeRates";
+import Search from "./components/search/search";
 
 function App() {
   const classes = styles();
 
   return (
     <main>
-      <h1 className={classes.title}>Курс валют на сегодня</h1>
+      <h1 className={classes.title}>
+        <b style={{ textTransform: "uppercase" }}>Rub</b> Exchange Rate
+      </h1>
+      <Search />
       <ExchangeRates />
     </main>
   );

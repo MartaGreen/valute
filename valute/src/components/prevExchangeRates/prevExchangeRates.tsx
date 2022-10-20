@@ -8,7 +8,13 @@ import PrevExchangeRate from "../prevExchangeRate/prevExchangeRate";
 import Loading from "../loading/loading";
 import { REQUEST_STATUS } from "../../constants/request.constants";
 
-function PrevExchangeRates({ charCode }: { charCode: string }) {
+function PrevExchangeRates({
+  charCode,
+  name,
+}: {
+  charCode: string;
+  name: string | undefined;
+}) {
   const classes = styles();
 
   const storeData = useSelector(
@@ -19,7 +25,6 @@ function PrevExchangeRates({ charCode }: { charCode: string }) {
   const prevExchangeRates: ExchangeRateType[] = storeData.prevExchangeRates;
   const status: string = storeData.status;
   const isHidden: boolean = storeData.isHidden;
-  // const status = REQUEST_STATUS.pending;
 
   return (
     <tr>
@@ -28,7 +33,9 @@ function PrevExchangeRates({ charCode }: { charCode: string }) {
           <table className={classes.prevRatesTable}>
             <thead>
               <tr>
-                <th colSpan={3}>Курс валюты за прошлые дни</th>
+                <th colSpan={3}>
+                  Exchange rate <b>{name}</b> for the past days
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -36,7 +43,7 @@ function PrevExchangeRates({ charCode }: { charCode: string }) {
 
               {status === REQUEST_STATUS.success &&
                 prevExchangeRates.map((prevExchangeRate: ExchangeRateType) => (
-                  <PrevExchangeRate prevExchangeRateData={prevExchangeRate} />
+                  <PrevExchangeRate exchRateData={prevExchangeRate} />
                 ))}
             </tbody>
           </table>
