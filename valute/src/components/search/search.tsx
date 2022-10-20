@@ -23,7 +23,9 @@ function Search() {
     return str?.toLowerCase().includes(searchedStr.toLowerCase());
   };
 
-  const onFindCurrency = () => {
+  const onFindCurrency = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const foundExchangeRate = exchangeRates.filter(
       (rate) => (
         isIncludeSubstr(rate?.NumCode, searchedString),
@@ -56,17 +58,15 @@ function Search() {
   };
 
   return (
-    <div className={classes.search}>
+    <form className={classes.search} onSubmit={onFindCurrency}>
       <input
         type="text"
         placeholder="Enter currency name or code"
         className={classes.search__field}
         onChange={onSearchedStrChanged}
       />
-      <button className={classes.search__btn} onClick={onFindCurrency}>
-        find
-      </button>
-    </div>
+      <button className={classes.search__btn}>find</button>
+    </form>
   );
 }
 
