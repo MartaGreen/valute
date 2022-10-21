@@ -21,8 +21,6 @@ export const prevExchangeRatesReducer = createAsyncThunk(
     //   return rejectWithValue("Server error! Could not get previous rates");
     // }
 
-    console.log("prev exchange rates request");
-
     const prevExchangeRates: ExchangeRateType[] | null =
       await getPrevExchangeRates(COUNT_OF_PREVIOUS_RATES, prevReqUrl, charCode);
 

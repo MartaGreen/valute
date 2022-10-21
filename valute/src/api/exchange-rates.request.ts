@@ -42,8 +42,10 @@ export async function getPrevExchangeRates(
       if (!exchangeRatesReqData) return null;
 
       prevRequestURL = exchangeRatesReqData.PreviousURL;
-      const exchangeRate: ExchangeRateType =
-        exchangeRatesReqData.Valute[valuteCharCode];
+      const exchangeRate: ExchangeRateType = {
+        ...exchangeRatesReqData.Valute[valuteCharCode],
+        Date: exchangeRatesReqData.Date,
+      };
       exchangeRate.isPrevious = true;
       resultArr.push(exchangeRate);
 

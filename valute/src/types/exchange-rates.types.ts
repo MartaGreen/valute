@@ -19,6 +19,7 @@ export type ExchangeRateType = {
   Value: number;
   Previous: number;
   isPrevious: boolean;
+  Date?: string;
 };
 
 export type ExchangeRateStateType = {
