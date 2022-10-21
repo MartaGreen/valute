@@ -16,6 +16,12 @@ function Search() {
   const exchangeRates: (ExchangeRateType | null)[] =
     exchRatesStore.exchangeRates;
 
+  const isStartsWith = (
+    str: string | null | undefined,
+    searchedStr: string
+  ) => {
+    return str?.toLowerCase().startsWith(searchedStr.toLowerCase());
+  };
   const isIncludeSubstr = (
     str: string | null | undefined,
     searchedStr: string
@@ -26,15 +32,23 @@ function Search() {
   const onFindCurrency = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const foundExchangeRate = exchangeRates.filter(
-      (rate) => (
-        isIncludeSubstr(rate?.NumCode, searchedString),
-        isIncludeSubstr(rate?.CharCode, searchedString),
-        isIncludeSubstr(rate?.Name, searchedString)
-      )
-    );
+    let foundExchangeRate = exchangeRates.filter(
+      (rate) =>
+        isStartsWith(rate?.NumCode, searchedString) ||
+        isStartsWith(rate?.CharCode, searchedString) ||
+        isStartsWith(rate?.Name, searchedString)
+    )[0];
 
-    const findedExchRateID: string | undefined = foundExchangeRate[0]?.ID;
+    if (!foundExchangeRate) {
+      foundExchangeRate = exchangeRates.filter(
+        (rate) =>
+          isIncludeSubstr(rate?.NumCode, searchedString) ||
+          isIncludeSubstr(rate?.CharCode, searchedString) ||
+          isIncludeSubstr(rate?.Name, searchedString)
+      )[0];
+    }
+
+    const findedExchRateID: string | undefined = foundExchangeRate?.ID;
     if (!findedExchRateID) return;
 
     const exchangeRateElement: HTMLElement | null =
