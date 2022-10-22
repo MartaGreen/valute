@@ -26,6 +26,16 @@ const styles = createUseStyles({
     cursor: "pointer",
   },
 
+  search__notFound: {
+    width: "100%",
+    color: "red",
+    fontSize: 20,
+    textAlign: "center",
+    display: " inline-block",
+    margin: "30px auto 0 auto",
+    dsplay: "flex",
+  },
+
   markerElement: {
     background: "rgb(255 229 156) !important",
   },

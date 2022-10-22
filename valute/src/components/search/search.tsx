@@ -8,7 +8,7 @@ import styles from "./search.style";
 
 function Search() {
   const [searchedString, setSearchedString] = useState("");
-  const [nothingFoundMsg, setNothingFoundMsg] = useState("");
+  const [notFound, setNotFound] = useState("");
   const classes = styles();
 
   const exchRatesStore = useSelector(
@@ -32,12 +32,9 @@ function Search() {
 
   const onFindCurrency = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!searchedString) {
-      setNothingFoundMsg("Oops! Nothing was found");
-      return;
-    }
+    if (!searchedString) return;
 
-    setNothingFoundMsg("");
+    setNotFound("");
     let foundExchangeRate = exchangeRates.filter(
       (rate) =>
         isStartsWith(rate?.NumCode, searchedString) ||
@@ -55,7 +52,10 @@ function Search() {
     }
 
     const findedExchRateID: string | undefined = foundExchangeRate?.ID;
-    if (!findedExchRateID) return;
+    if (!findedExchRateID) {
+      setNotFound("Oops! Nothing was found!");
+      return;
+    }
 
     const exchangeRateElement: HTMLElement | null =
       document.getElementById(findedExchRateID);
@@ -88,7 +88,7 @@ function Search() {
         />
         <button className={classes.search__btn}>find</button>
       </form>
-      <span>{nothingFoundMsg}</span>
+      <span className={classes.search__notFound}>{notFound}</span>
     </>
   );
 }
