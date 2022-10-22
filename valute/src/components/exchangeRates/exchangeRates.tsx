@@ -51,7 +51,7 @@ export default function ExchangeRates() {
               <PrevExchangeRates
                 charCode={exchangeRate.CharCode}
                 key={exchangeRate.CharCode}
-                name={exchangeRates[index - 1]?.Name}
+                name={exchangeRates[index].Name}
               />
             </>
           ))}

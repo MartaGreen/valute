@@ -19,6 +19,8 @@ function PrevExchangeRate({
   const classes = styles();
   const date = formatDate(exchRateData.Date);
 
+  console.log(exchRateData);
+
   return (
     <tr className={classes.prevRatesTable__tr}>
       <td className={classes.prevRatesTable__td}>{date}</td>
