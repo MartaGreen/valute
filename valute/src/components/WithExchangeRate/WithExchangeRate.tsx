@@ -1,6 +1,7 @@
 import React from "react";
 import { calculatePercentOfChange } from "../../shared/calculations";
 import { ExchangeRateType } from "../../types/exchange-rates.types";
+import exchangeRate from "../exchangeRate/exchangeRate";
 
 function WithExchangeRate(Component: React.ComponentType<any>) {
   return (props: { exchRateData: ExchangeRateType; isGrayBg?: boolean }) => {
@@ -9,7 +10,17 @@ function WithExchangeRate(Component: React.ComponentType<any>) {
       props.exchRateData.Previous
     );
 
-    return <Component {...props} percentOfChange={percentOfChange} />;
+    const valuteRate = (
+      props.exchRateData.Value / props.exchRateData.Nominal
+    ).toFixed(4);
+
+    return (
+      <Component
+        {...props}
+        percentOfChange={percentOfChange}
+        rate={valuteRate}
+      />
+    );
   };
 }
 

@@ -12,9 +12,11 @@ import exchangeRate from "../exchangeRate/exchangeRate";
 function PrevExchangeRate({
   exchRateData,
   percentOfChange,
+  rate,
 }: {
   exchRateData: ExchangeRateType;
   percentOfChange: number;
+  rate: number;
 }) {
   const classes = styles();
 
@@ -23,7 +25,7 @@ function PrevExchangeRate({
   return (
     <tr className={classes.prevRatesTable__tr}>
       <td className={classes.prevRatesTable__td}>{date}</td>
-      <td className={classes.prevRatesTable__td}>{exchRateData.Value}</td>
+      <td className={classes.prevRatesTable__td}>{rate}</td>
       <td
         style={{
           color: `${

@@ -19,10 +19,12 @@ function ExchangeRate({
   exchRateData,
   isGrayBg,
   percentOfChange,
+  rate,
 }: {
   exchRateData: ExchangeRateType;
   isGrayBg: boolean;
   percentOfChange: number;
+  rate: number;
 }) {
   const [isOpened, setIsOpened] = useState(false);
   const classes = styles();
@@ -46,6 +48,7 @@ function ExchangeRate({
     dispatch(updateActiveExchangeRate(charCode));
     dispatch(prevExchangeRatesReducer({ prevReqUrl, charCode }));
 
+    // move to chosen currency
     setTimeout(
       () =>
         (exchangeRateElement.current as HTMLTableRowElement).scrollIntoView({
@@ -68,7 +71,7 @@ function ExchangeRate({
       <td className={classes.exchangeRateTable__td}>
         {`${exchRateData.NumCode} ${exchRateData.CharCode}`}
       </td>
-      <td className={classes.exchangeRateTable__td}>{exchRateData.Value}</td>
+      <td className={classes.exchangeRateTable__td}>{rate}</td>
       <td
         className={`${classes.exchangeRateTable__td} ${classes.exchangeRateTable__change}`}
         style={{
