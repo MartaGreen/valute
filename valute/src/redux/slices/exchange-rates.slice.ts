@@ -6,7 +6,7 @@ import {
   ExchangeRateType,
   ExchangeRatesRequestType,
 } from "../../types/exchange-rates.types";
-import { ObjectToArray } from "../../shared/arrayFunctions";
+import { transformRateObjectToArray } from "../../shared/arrayFunctions";
 import { REQUEST_STATUS } from "../../constants/request.constants";
 
 export const exchangeRatesReducer = createAsyncThunk(
@@ -35,7 +35,7 @@ export const exchangeRatesSlice = createSlice({
     });
     builder.addCase(exchangeRatesReducer.fulfilled, (state, action) => {
       state.status = REQUEST_STATUS.success;
-      state.exchangeRates = ObjectToArray(action.payload.Valute);
+      state.exchangeRates = transformRateObjectToArray(action.payload.Valute);
       state.prevReqUrl = action.payload.PreviousURL;
     });
     builder.addCase(exchangeRatesReducer.rejected, (state) => {

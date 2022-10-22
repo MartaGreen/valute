@@ -3,7 +3,9 @@ import {
   ExchangeRateType,
 } from "../types/exchange-rates.types";
 
-export function ObjectToArray(obj: ExchangeRatesType): ExchangeRateType[] {
+export function transformRateObjectToArray(
+  obj: ExchangeRatesType
+): ExchangeRateType[] {
   const exchangeRatesCodes: string[] = Object.keys(obj);
   const exchangeRatesArray: ExchangeRateType[] = exchangeRatesCodes.map(
     (code: string) => {
