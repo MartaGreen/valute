@@ -23,7 +23,7 @@ export const EXCHANGE_RATES_EN_NAMES: { [key: string]: string } = {
   "Китайских юаней": "Chinese yuan",
   "Молдавских леев": "Moldovan Leu",
   "Норвежских крон": "Norwegean Krone",
-  "Польский злотый": "Zloty",
+  "Польский злотый": "Polish Zloty",
   "Румынский лей": "Romanian Leu",
   "СДР (специальные права заимствования)": "Special drawing rights",
   "Сингапурский доллар": "Singapore Dollar",

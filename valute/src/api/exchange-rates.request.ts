@@ -9,17 +9,17 @@ export async function getExchangeRates(requestURL: string) {
     const response: Response = await fetch(requestURL);
     if (!response.ok) throw new Error(`Server error ${response.statusText}`);
 
-    const exchangeRatesReqData: ExchangeRatesRequestType =
-      await response.json();
-    const exchangeRates = exchangeRatesReqData.Valute;
+    const requestData: ExchangeRatesRequestType = await response.json();
+    const exchangeRates = requestData.Valute;
+
+    // translate currency names to en
     Object.keys(exchangeRates).forEach((key: string) => {
       const valuteName = exchangeRates[key].Name;
       exchangeRates[key].Name = EXCHANGE_RATES_EN_NAMES[valuteName];
     });
-    console.log("exchangeRates", exchangeRates);
-    exchangeRatesReqData.Valute = exchangeRates;
+    requestData.Valute = exchangeRates;
 
-    return exchangeRatesReqData;
+    return requestData;
   } catch (err) {
     console.log("error occurred while getting data from server", err);
     return null;
@@ -39,34 +39,34 @@ export async function getPrevExchangeRates(
   prevRequestURL: string,
   valuteCharCode: string,
   i = 0,
-  resultArr: ExchangeRateType[] = []
+  prevValuteArr: ExchangeRateType[] = []
 ) {
   const prevExchangeRates: ExchangeRateType[] | null = await (async () => {
     if (i < prevRatesCount) {
       i++;
 
-      const exchangeRatesReqData: ExchangeRatesRequestType | null =
+      const requestData: ExchangeRatesRequestType | null =
         await getExchangeRates(prevRequestURL);
-      if (!exchangeRatesReqData) return null;
+      if (!requestData) return null;
 
-      prevRequestURL = exchangeRatesReqData.PreviousURL;
+      prevRequestURL = requestData.PreviousURL;
       const exchangeRate: ExchangeRateType = {
-        ...exchangeRatesReqData.Valute[valuteCharCode],
-        Date: exchangeRatesReqData.Date,
+        ...requestData.Valute[valuteCharCode],
+        Date: requestData.Date,
       };
       exchangeRate.isPrevious = true;
-      resultArr.push(exchangeRate);
+      prevValuteArr.push(exchangeRate);
 
       await getPrevExchangeRates(
         prevRatesCount,
         prevRequestURL,
         valuteCharCode,
         i,
-        resultArr
+        prevValuteArr
       );
     }
 
-    return resultArr;
+    return prevValuteArr;
   })();
 
   return prevExchangeRates;
