@@ -6,6 +6,8 @@ import { EXCHANGE_RATE_CHANGE_COLOR } from "../../constants/exchange-rates.const
 import dateFormat, { masks } from "dateformat";
 
 import WithExchangeRate from "../WithExchangeRate/WithExchangeRate";
+import formatDate from "../../shared/formateDate";
+import exchangeRate from "../exchangeRate/exchangeRate";
 
 function PrevExchangeRate({
   exchRateData,
@@ -16,18 +18,11 @@ function PrevExchangeRate({
 }) {
   const classes = styles();
 
-  const getDate = () => {
-    const dateStr: string | undefined = exchRateData.Date;
-    if (!dateStr) return;
-
-    const date: Date = new Date(dateStr);
-    const formatedDate = dateFormat(date, "mmmm dS, yyyy");
-    return formatedDate;
-  };
+  const date = formatDate(exchRateData.Date);
 
   return (
     <tr className={classes.prevRatesTable__tr}>
-      <td className={classes.prevRatesTable__td}>{getDate()}</td>
+      <td className={classes.prevRatesTable__td}>{date}</td>
       <td className={classes.prevRatesTable__td}>{exchRateData.Value}</td>
       <td
         style={{

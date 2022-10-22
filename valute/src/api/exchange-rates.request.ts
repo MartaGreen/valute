@@ -2,6 +2,7 @@ import {
   ExchangeRateType,
   ExchangeRatesRequestType,
 } from "../types/exchange-rates.types";
+import { EXCHANGE_RATES_EN_NAMES } from "../constants/exchange-rates.constants";
 
 export async function getExchangeRates(requestURL: string) {
   try {
@@ -10,6 +11,13 @@ export async function getExchangeRates(requestURL: string) {
 
     const exchangeRatesReqData: ExchangeRatesRequestType =
       await response.json();
+    const exchangeRates = exchangeRatesReqData.Valute;
+    Object.keys(exchangeRates).forEach((key: string) => {
+      const valuteName = exchangeRates[key].Name;
+      exchangeRates[key].Name = EXCHANGE_RATES_EN_NAMES[valuteName];
+    });
+    console.log("exchangeRates", exchangeRates);
+    exchangeRatesReqData.Valute = exchangeRates;
 
     return exchangeRatesReqData;
   } catch (err) {

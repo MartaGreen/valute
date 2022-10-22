@@ -3,6 +3,7 @@ import styles from "./App.style";
 
 import ExchangeRates from "./components/exchangeRates/exchangeRates";
 import Search from "./components/search/search";
+import formatDate from "./shared/formateDate";
 
 function App() {
   const classes = styles();

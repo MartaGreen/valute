@@ -34,7 +34,7 @@ function PrevExchangeRates({
             <thead>
               <tr>
                 <th colSpan={3}>
-                  Exchange rate <b>{name}</b> for the past days
+                  <b>{name}</b> Exchange rate for the past days
                 </th>
               </tr>
             </thead>
