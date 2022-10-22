@@ -3,11 +3,9 @@ import styles from "./prevExchangeRate.style";
 
 import { ExchangeRateType } from "../../types/exchange-rates.types";
 import { EXCHANGE_RATE_CHANGE_COLOR } from "../../constants/exchange-rates.constants";
-import dateFormat, { masks } from "dateformat";
 
 import WithExchangeRate from "../WithExchangeRate/WithExchangeRate";
 import formatDate from "../../shared/formateDate";
-import exchangeRate from "../exchangeRate/exchangeRate";
 
 function PrevExchangeRate({
   exchRateData,
@@ -19,7 +17,6 @@ function PrevExchangeRate({
   rate: number;
 }) {
   const classes = styles();
-
   const date = formatDate(exchRateData.Date);
 
   return (

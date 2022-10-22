@@ -15,13 +15,12 @@ import Loading from "../loading/loading";
 
 export default function ExchangeRates() {
   const classes = styles();
-  let charCode = "";
 
   const storeData = useSelector(
     (state: { exchangeRates: ExchangeRateStateType }) => state.exchangeRates
   );
   const status: string = storeData.status;
-  const exchangeRates: (ExchangeRateType | null)[] = storeData.exchangeRates;
+  const exchangeRates: ExchangeRateType[] = storeData.exchangeRates;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,28 +41,20 @@ export default function ExchangeRates() {
         <Loading status={status} />
 
         {status === REQUEST_STATUS.success &&
-          exchangeRates.map(
-            (exchangeRate: ExchangeRateType | null, index: number) => {
-              if (!exchangeRate) {
-                return (
-                  <PrevExchangeRates
-                    charCode={charCode}
-                    key={charCode}
-                    name={exchangeRates[index - 1]?.Name}
-                  />
-                );
-              }
-
-              charCode = exchangeRate.CharCode;
-              return (
-                <ExchangeRate
-                  exchRateData={exchangeRate}
-                  key={exchangeRate.ID}
-                  isGrayBg={index % 4 !== 0}
-                />
-              );
-            }
-          )}
+          exchangeRates.map((exchangeRate: ExchangeRateType, index: number) => (
+            <>
+              <ExchangeRate
+                exchRateData={exchangeRate}
+                key={exchangeRate.ID}
+                isGrayBg={index % 2 !== 0}
+              />
+              <PrevExchangeRates
+                charCode={exchangeRate.CharCode}
+                key={exchangeRate.CharCode}
+                name={exchangeRates[index - 1]?.Name}
+              />
+            </>
+          ))}
       </tbody>
     </table>
   );

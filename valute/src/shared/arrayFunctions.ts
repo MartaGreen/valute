@@ -3,13 +3,13 @@ import {
   ExchangeRateType,
 } from "../types/exchange-rates.types";
 
-export function ObjectToArray(obj: ExchangeRatesType) {
+export function ObjectToArray(obj: ExchangeRatesType): ExchangeRateType[] {
   const exchangeRatesCodes: string[] = Object.keys(obj);
-  const exchangeRatesArray: (ExchangeRateType | null)[] = [];
-  exchangeRatesCodes.forEach((exchangeRatesCode) => {
-    exchangeRatesArray.push(obj[exchangeRatesCode]);
-    exchangeRatesArray.push(null);
-  });
+  const exchangeRatesArray: ExchangeRateType[] = exchangeRatesCodes.map(
+    (code: string) => {
+      return obj[code];
+    }
+  );
   return exchangeRatesArray;
 }
 
